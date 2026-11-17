@@ -16,7 +16,10 @@ application/data/install/install.lock
 runtime/*.php
 sh_work/py/data/*
 sh_work/py/my/*.csv
-# 舊站 Docker 測試用的資料庫備份（1.3GB，是專案根目錄 db_mysql_data.sql 的硬連結）
+# 資料庫備份（約 1.2GB，超過 GitHub 單檔 100MB 上限，也含正式站資料，不能放上 GitHub）
+# deploy/db/ 是 Docker 測試環境匯入用的資料夾，整個排除
 /deploy/db/
+# 不管放在哪個資料夾都排除
+db_mysql_data.sql
 # Google API 金鑰（sh_work/py/my/fetch_g*.py 使用）
 sh_work/py/my/key/
