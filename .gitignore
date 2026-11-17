@@ -1,0 +1,20 @@
+.idea
+/.vscode
+*.DS_Store
+.env
+.tags*
+.swp
+sftp-config*
+bs-config*
+.coding-ide/*
+nohup*
+*.log
+.wepycache
+.well-known
+node_modules/
+application/data/install/install.lock
+runtime/*.php
+sh_work/py/data/*
+sh_work/py/my/*.csv
+# 舊站 Docker 測試用的資料庫備份（1.3GB，是專案根目錄 db_mysql_data.sql 的硬連結）
+/deploy/db/
