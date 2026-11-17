@@ -41,7 +41,7 @@ check "/vodplay/$vid-1-1/"                200 'player_aaaa'
 check "/index.php/vod/detail/id/$vid.html" 404   # 有定義路由的頁面不能用原始路徑進入（ThinkPHP 規則，正式站相同）
 check /rss/index                          200 '<rss'
 check /static/js/player.js                200
-check /template/web2026/asset/css/stui_default.css 200
+check /template/o/asset/css/stui_default.css 200
 
 # API（fetch / reset 會依 IP 回 403 或資料；這裡只打唯讀的首頁）
 check /api.php/link                       200 'link api'
@@ -56,7 +56,7 @@ esac
 
 # 不該對外的檔案（Docker 的 Apache 設定 / server-config 範本會擋）
 check /install.php                        403
-check /template/web2026/html/php/function.php 403
+check /template/orangeh/html/php/function.php 403
 check /application/database.php           403
 check /runtime/index.html                 403
 check /.user.ini                          403

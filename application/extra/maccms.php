@@ -17,7 +17,7 @@ return array (
   ),
   'site' => 
   array (
-    'site_name' => 'GGMIMICC|啾咪探探',
+    'site_name' => 'ORANGEH|橙色小屋',
     'site_url' => 'https://ccc.ggmimicc.cc/ccc/',
     'site_wapurl' => 'https://ccc.ggmimicc.cc/ccc/',
     'site_keywords' => 'GGMIMICC,啾咪探探,GG,MIMI,官方网站,Papapa,pa,草阿粿,爆料网,抖音,手机游戏,手游,线上看,啪啪啪',
@@ -28,10 +28,10 @@ return array (
     'install_dir' => '/',
     'site_logo' => 'upload/site/20251027-1/okppgg1.png',
     'site_waplogo' => 'upload/site/20251027-1/okppgg1.png',
-    'template_dir' => 'web2026',
+    'template_dir' => 'orangeh',
     'html_dir' => 'html',
     'mob_status' => '0',
-    'mob_template_dir' => 'web2026',
+    'mob_template_dir' => 'orangeh',
     'mob_html_dir' => 'html',
     'site_tj' => '',
     'site_status' => '1',

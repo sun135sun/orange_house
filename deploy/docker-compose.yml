@@ -1,24 +1,24 @@
-# 舊站（cms_template）本機測試環境：web (PHP 7.4 + Apache) + MySQL 5.7 + Redis
-# 用法（在 cms_template/deploy 目錄）：docker compose up -d --build
+# 舊站（orangeh）本機測試環境：web (PHP 7.4 + Apache) + MySQL 5.7 + Redis
+# 用法（在 orangeh/deploy 目錄）：docker compose up -d --build
 # 網址 http://localhost:8081 ，MySQL localhost:3308；和 code/server_app（8080 / 3307）可以同時跑
 # 所有設定都寫在這個檔裡，不需要 .env
-name: cms_template
+name: orangeh
 
 services:
   web:
     build:
       context: ..
       dockerfile: deploy/Dockerfile
-    image: cms_template-web
-    container_name: cms_template_web
+    image: orangeh-web
+    container_name: orangeh_web
     environment:
       TZ: Asia/Taipei
       # ThinkPHP 讀 PHP_ 開頭的環境變數（application/database.php、common/behavior/Init.php）
       PHP_DATABASE_HOSTNAME: mysql
       PHP_DATABASE_HOSTPORT: 3306
-      PHP_DATABASE_DATABASE: 18av999_com
-      PHP_DATABASE_USERNAME: 18av999_com
-      PHP_DATABASE_PASSWORD: change_me
+      PHP_DATABASE_DATABASE: orangeh
+      PHP_DATABASE_USERNAME: orangeh
+      PHP_DATABASE_PASSWORD: "#@aqaq#ewqaA"
       PHP_CACHE_HOST: redis
       PHP_CACHE_PORT: 6379
       # true = 頁面顯示 ThinkPHP 錯誤細節
@@ -39,7 +39,7 @@ services:
     image: mysql:5.7.44
     # mysql 5.7 官方映像只有 amd64，Apple Silicon 需要模擬
     platform: linux/amd64
-    container_name: cms_template_mysql
+    container_name: orangeh_mysql
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_general_ci
@@ -49,10 +49,10 @@ services:
       - --myisam_sort_buffer_size=256M
       - --bulk_insert_buffer_size=256M
     environment:
-      MYSQL_ROOT_PASSWORD: change_me_root
-      MYSQL_DATABASE: 18av999_com
-      MYSQL_USER: 18av999_com
-      MYSQL_PASSWORD: change_me
+      MYSQL_ROOT_PASSWORD: "#@aqaq#ewqaA"
+      MYSQL_DATABASE: orangeh
+      MYSQL_USER: orangeh
+      MYSQL_PASSWORD: "#@aqaq#ewqaA"
       TZ: Asia/Taipei
     ports:
       - "3308:3306"
@@ -73,7 +73,7 @@ services:
   redis:
     # 後台「系统 → 缓存」設定是 redis
     image: redis:7.2-alpine
-    container_name: cms_template_redis
+    container_name: orangeh_redis
     command: ["redis-server", "--save", "", "--appendonly", "no"]
     restart: unless-stopped
 
