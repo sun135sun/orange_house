@@ -1,0 +1,199 @@
+<div class="stui-pannel__bd">
+    <!-- 分类列表 -->
+    {maccms:type ids="parent" flag="vod" order="asc" by="sort" id="vo" key="key2"}
+    <div class="stui-vodlist__head">
+        <a class="pull-right" href="{:mac_url_type($vo)}">更多 <i class="iconfont icon-more"></i></a>
+        <h3><a href="{:mac_url_type($vo)}"><i class="iconfont icon-all"></i> {:unicode_encode($vo.type_name)}</a></h3>
+        <div class="grid-container">
+            {maccms:type parent="'. $vo['type_id'] .'" flag="vod" order="asc" by="sort" id="vo2" key="key2"}
+            <div class="grid-item" style="background: #;"> <a href="{:mac_url_type($vo2)}" title="{:unicode_encode($vo2.type_name)}">{:unicode_encode($vo2.type_name)}</a></div>
+            {/maccms:type}
+        </div>
+    </div>
+    {/maccms:type}
+    <!-- end 分类列表 -->
+</div>
+
+{include file="module/wn_block_bottom_link"}
+
+<div class="container">
+    <div class="stui-pannel_ft col-pd">
+        <hr style="98%">
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="stui-foot clearfix">
+            <p class="text-muted text-center visible-xs">
+                <!--本站共有视频资源:127235部 今日更新:425部<br>-->
+                <a href="/rss/google.xml" target="_blank">Sitemap</a>丨地址发布页：<a href="xxxxx" target="_blank">xxxxx</a><br>
+                合作联系方式：@xxxxx
+            </p>
+            <p class="text-muted text-center visible-xs">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</p>
+            <p class="text-muted text-center visible-xs">© Copyright {:date('Y')} {:unicode_encode($maccms.site_name)} - {:unicode_encode($maccms.site_url)} All Rights Reserved.</p>
+        </div>
+    </div>
+</div>
+
+<style>
+    #myBtn {
+        display: none;
+        position: fixed;
+        bottom: 20%;
+        right: 2.5%;
+        z-index: 99;
+        border: none;
+        outline: none;
+        background-color: #fff;
+        color: white;
+        cursor: pointer;
+        padding: 10px;
+        border-radius: 30px;
+    }
+
+    #myBtn:hover {
+        background-color: #fff;
+    }
+</style>
+<button onclick="topFunction()" id="myBtn" title="返回顶部">👆</button>
+
+<script>
+    // 当网页向下滑动 20px 出现"返回顶部" 按钮
+    window.onscroll = function () {scrollFunction()};
+
+    function scrollFunction() {
+        console.log(121);
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("myBtn").style.display = "block";
+        } else {
+            document.getElementById("myBtn").style.display = "none";
+        }
+    }
+
+    // 点击按钮，返回顶部
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+</script>
+
+<script>
+
+    //document.cookie = 'ad_click_data=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+    var cssSelector = '{$ads.hidden_ads_css_selector}';
+    console.log("cssSelector: " + cssSelector);
+    var jumpChance = parseInt('{$ads.jump_chance ?: 100}');
+    console.log("jumpChance: " + jumpChance);
+    var jumpLimit = parseInt('{$ads.jump_limit ?: 9999}');
+    console.log("jumpLimit: " + jumpLimit);
+
+    var links = [
+        {maccms:link type="font" order="asc" by="sort" num="9999"}
+            {if( $vo.link_sort == 9999)}
+                {if ($key > 0)},{/if}
+                {
+                    id: {$vo.link_id},
+                    url: '{$vo.link_url}',
+                    maxClicks: {$vo.link_max_clicks},
+                    weight: '{$vo.link_weight ?: 1}',
+                    currentClicks: 0
+                }
+            {/if}
+        {/maccms:link}
+    ];
+
+    function getClickData() {
+        var data = document.cookie.split('; ').find(row => row.startsWith('ad_click_data='));
+        if (data) {
+            try {
+                return JSON.parse(decodeURIComponent(data.split('=')[1]));
+            } catch (e) {}
+        }
+        return {};
+    }
+
+    function setClickData(data) {
+        document.cookie = 'ad_click_data=' + encodeURIComponent(JSON.stringify(data)) + '; path=/; max-age=' + (60 * 60 * 24);
+    }
+
+    var clickData = getClickData();
+    links.forEach(link => {
+        link.currentClicks = clickData[link.id] || 0;
+    });
+
+    function getTotalClicks() {
+        return links.reduce((sum, link) => sum + link.currentClicks, 0);
+    }
+    
+        
+    function clickLog(link) {
+        console.log('Logging click:');
+        console.log(link);
+
+
+        if (typeof gtag === 'function') {
+            gtag('event', 'ad_click', {
+                'event_category': 'Ads',
+                'event_label': link.url,
+                'value': link.id
+            });
+        }
+
+    }
+
+    document.querySelectorAll(cssSelector).forEach(marker => {
+        marker.addEventListener('click', function (e) {
+
+        var availableLinks = links.filter(link => link.currentClicks < link.maxClicks);
+    
+        if (availableLinks.length === 0) {
+            console.log('No available links.');
+            return;
+        }
+    
+        var totalClicks = getTotalClicks();
+    
+        if (totalClicks >= jumpLimit) {
+            console.log('Jump limit reached.');
+            return;
+        }
+    
+        var chanceRoll = Math.random() * 100;
+        if (chanceRoll > jumpChance) {
+            console.log('Jump chance failed. Rolled: ' + chanceRoll);
+            return;
+        }
+    
+        e.preventDefault();
+    
+        var totalWeight = availableLinks.reduce((sum, link) => sum + parseInt(link.weight), 0);
+        var randomWeight = Math.random() * totalWeight;
+    
+        var selectedLink;
+        for (var i = 0; i < availableLinks.length; i++) {
+            randomWeight -= parseInt(availableLinks[i].weight);
+            if (randomWeight <= 0) {
+                selectedLink = availableLinks[i];
+                break;
+            }
+        }
+    
+        if (!selectedLink) {
+            selectedLink = availableLinks[availableLinks.length - 1];
+        }
+    
+        selectedLink.currentClicks++;
+        clickData[selectedLink.id] = selectedLink.currentClicks;
+        setClickData(clickData);
+        
+        clickLog(selectedLink);
+    
+        window.open(selectedLink.url, '_blank');
+    }, false);
+
+    });
+
+    console.log('完成');
+</script>
+

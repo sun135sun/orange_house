@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        {include file="public/include"}
+        <title>{:unicode_encode($param.wd)}-第{$param.pg|default='1'}页-{:unicode_encode($maccms.site_name)}</title>
+        <meta name="keywords" content="{:unicode_encode($param.wd)},{:unicode_encode($maccms.site_keywords)}" />
+        <meta name="description" content="{:unicode_encode($param.wd)} {:unicode_encode($maccms.site_description)}" />
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="stui-pannel">
+                    <div class="stui-pannel__hd">
+
+                        {include file="public/header"}
+                        
+                        <div class="stui-pannel__bd clearfix">
+                            <div class="stui-screen">
+                                <div class="head clearfix">
+                                    <span class="text">搜索与“{:unicode_encode($param.wd)}”相关的视频</span>
+                                </div>
+                            </div>
+
+                            <ul class="stui-vodlist clearfix">
+                                {maccms:vod type="current" by="time" order="desc" num="12" paging="yes" pageurl="vod/search"}
+                                {include file="module/vodlist"}
+                                {/maccms:vod}
+
+                            </ul>
+                        </div>
+
+                        {include file="public/paging"}
+                    </div>
+                </div>
+                
+                {include file="public/footer"}
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            $(".open-screen").click(function () {
+                var display = $('#screenbox').css('display');
+                if (display == 'block') {
+                    $("#screenbox").slideUp("slow");
+                    $(this).html('展开 <i class="iconfont icon-moreunfold"></i>')
+                } else {
+                    $("#screenbox").slideDown("slow");
+                    $(this).html('收起 <i class="iconfont icon-less"></i>')
+                }
+            });
+        </script>
+
+    </body>
+
+</html>

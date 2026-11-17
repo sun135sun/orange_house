@@ -1,0 +1,104 @@
+<script>
+    //document.cookie = 'ad_click_data=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+    console.log('link_js loaded');
+    var links = [
+        {maccms:link type="font" order="asc" by="sort" num="9999"}
+            {if( $vo.link_sort == 9999)}
+                {if ($key > 0)},{/if}
+                {
+                    id: {$vo.link_id},
+                    url: '{$vo.link_url}',
+                    maxClicks: {$vo.link_max_clicks},
+                    weight: '{$vo.link_weight ?: 1}',
+                    currentClicks: 0
+                }
+            {/if}
+        {/maccms:link}
+    ];
+
+    function getClickData() {
+        var data = document.cookie.split('; ').find(row => row.startsWith('ad_click_data='));
+        if (data) {
+            try {
+                return JSON.parse(decodeURIComponent(data.split('=')[1]));
+            } catch (e) {}
+        }
+        return {};
+    }
+
+        function setClickData(data) {
+            var now = new Date();
+            var midnight = new Date();
+            midnight.setHours(24, 0, 0, 0);
+        
+            document.cookie = 'ad_click_data=' + encodeURIComponent(JSON.stringify(data)) + '; path=/; expires=' + midnight.toUTCString();
+        }
+
+    var clickData = getClickData();
+    links.forEach(link => {
+        link.currentClicks = clickData[link.id] || 0;
+    });
+
+    function attachGroup(selector, jumpChance, jumpLimit) {
+        document.querySelectorAll(selector).forEach(marker => {
+            marker.addEventListener('click', function (e) {
+                var availableLinks = links.filter(link => link.currentClicks < link.maxClicks);
+                if (availableLinks.length === 0) {
+                    console.log(`[${selector}] No available links`);
+                    return;
+                }
+
+                var totalClicks = availableLinks.reduce((sum, link) => sum + link.currentClicks, 0);
+                if (totalClicks >= jumpLimit) {
+                    console.log(`[${selector}] Jump limit reached`);
+                    return;
+                }
+
+                var chanceRoll = Math.random() * 100;
+                if (chanceRoll > jumpChance) {
+                    console.log(`[${selector}] Jump chance failed. Rolled: ${chanceRoll}`);
+                    return;
+                }
+
+                e.preventDefault();
+
+                var totalWeight = availableLinks.reduce((sum, link) => sum + parseInt(link.weight), 0);
+                var randomWeight = Math.random() * totalWeight;
+                var selectedLink;
+
+                for (var i = 0; i < availableLinks.length; i++) {
+                    randomWeight -= parseInt(availableLinks[i].weight);
+                    if (randomWeight <= 0) {
+                        selectedLink = availableLinks[i];
+                        break;
+                    }
+                }
+
+                if (!selectedLink) {
+                    selectedLink = availableLinks[availableLinks.length - 1];
+                }
+
+                selectedLink.currentClicks++;
+                clickData[selectedLink.id] = selectedLink.currentClicks;
+                setClickData(clickData);
+
+                console.log(`[${selector}] Logging click:`, selectedLink);
+                if (typeof _paq !== 'undefined') _paq.push(['trackLink', selectedLink.url, 'link']);
+                if (typeof gtag === 'function') {
+                    gtag('event', 'ad_click', {
+                        'event_category': 'Ads',
+                        'event_label': selectedLink.url,
+                        'value': selectedLink.id
+                    });
+                }
+
+                window.open(selectedLink.url, '_blank');
+            }, false);
+        });
+    }
+
+    attachGroup('{$ads.hidden_ads_css_selector}', parseInt('{$ads.jump_chance ?: 100}'), parseInt('{$ads.jump_limit ?: 9999}'));
+    attachGroup('{$ads.hidden_ads_css_selector2}', parseInt('{$ads.jump_chance2 ?: 100}'), parseInt('{$ads.jump_limit2 ?: 9999}'));
+
+    console.log('完成');
+</script>

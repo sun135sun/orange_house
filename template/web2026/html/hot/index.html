@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		{include file="public/include"}
+		<title>{:unicode_encode($maccms.site_name)} </title>
+		<meta name="keywords" content="{:unicode_encode($maccms.site_keywords)}" />
+		<meta name="description" content="{:unicode_encode($maccms.site_description)}">
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="stui-pannel">
+					<div class="stui-pannel__hd">
+
+						{include file="hot/header2"}
+
+						<div class="stui-pannel__bd clearfix">
+							<div class="stui-screen">
+								<li>
+									<h4><i class="iconfont icon-hot"></i>热门影片</h4>
+								</li>
+
+								<div class="head clearfix">
+									<a href="javascript:;" class="open-screen pull-right"> 
+										<font>收起  <i class="iconfont icon-less"></i></font>
+									</a>
+									<span class="text">已选择：热门</span> 
+								</div>
+
+								<div class="item" id="screenbox" style="Xdisplay: none;">
+									<!-- 筛选 -->
+									<ul class="clearfix">
+										<li>
+											<span>按类型：</span>
+										</li>
+										{maccms:type ids="200,300,400,500" by="sort" order="desc"}
+										<li><a href="{:mac_url_type($vo)}" class="text-muted">{:unicode_encode($vo.type_name)}</a></li>
+										{/maccms:type}
+									</ul>
+									<!-- end 筛选 -->
+								</div>
+							</div>
+							
+							<ul class="stui-vodlist clearfix" id="show_li">
+								{maccms:vod num="100" by="hits,time" order="desc,desc" start="0"}
+								<li>
+									<div class="stui-vodlist__box link_re">
+										<a class="stui-vodlist__thumb lazyload" href="{:mac_url_vod_play($vo)}" title="{:unicode_encode($vo.vod_name)}" data-original="{:mac_url_img($vo.vod_pic)}">
+											<span class="play hidden-xs"></span>
+											<!--{:mac_url_img($vo.vod_pic)}-->
+                                            <span class="pic-text-top text-right">{:unicode_encode($vo.type.type_name)}</span>
+										</a>
+										<div class="stui-vodlist__detail">
+											<h4 class="title text-overflow"><a href="{:mac_url_vod_detail($vo)}" title="{:unicode_encode($vo.vod_name)}">{:unicode_encode($vo.vod_name)}</a></h4>
+											<!--<p class="text text-overflow text-muted hidden-xs">内详</p>-->
+										</div>
+									</div>
+								</li>
+								{/maccms:vod}
+							</ul>
+
+							<ul style="display: none;">
+								{maccms:vod num="600" by="hits,time" order="desc,desc" start="101"}
+								<li class="topic-items" style="display: none;">
+									<div class="stui-vodlist__box link_re">
+										<a class="stui-vodlist__thumb lazyload" href="{:mac_url_vod_play($vo)}" title="{:unicode_encode($vo.vod_name)}" data-original="{:mac_url_img($vo.vod_pic)}">
+											<span class="play hidden-xs"></span>
+											<!--{:mac_url_img($vo.vod_pic)}-->
+                                            <span class="pic-text-top text-right">{:unicode_encode($vo.type.type_name)}</span>
+										</a>
+										<div class="stui-vodlist__detail">
+											<h4 class="title text-overflow"><a href="{:mac_url_vod_detail($vo)}" title="{:unicode_encode($vo.vod_name)}">{:unicode_encode($vo.vod_name)}</a></h4>
+											<!--<p class="text text-overflow text-muted hidden-xs">内详</p>-->
+										</div>
+									</div>
+								</li>
+								{/maccms:vod}
+							</ul>
+							<button class="load-more-btn" id="loadTip" style="display: block;">载入更多影片......</button>
+							 
+<style>
+	.load-more-btn {
+            display: block;
+            width: 200px;
+            margin: 30px auto;
+            padding: 12px 20px;
+            background-color: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s;
+     }
+    .load-more-btn:hover {
+            background-color: #e84118;
+    }
+</style>
+<script>
+let loadStop=true
+let loadingItem = false;
+let more=15;
+let shuffled=[];
+const show_items = document.getElementById('show_li');
+document.addEventListener('DOMContentLoaded', function() {
+    const items = document.querySelectorAll('.topic-items');
+    const allItems = Array.from(items); 
+    shuffled = shuffleArray(allItems);
+    shuffled.forEach((item, index) => {
+        if (index <= more) {
+			item.style.display = 'block';
+			show_items.appendChild(item);
+        }
+    });
+});
+function shuffleArray(array) {
+    const shuffleds = [...array];  
+    for (let i = shuffleds.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffleds[i], shuffleds[j]] = [shuffleds[j], shuffleds[i]];
+    }
+    return shuffleds;
+}
+function loadMore(){  
+    loadingItem = true; 
+	try {
+		var before_count=more;
+		more+=32;   
+    	shuffled.forEach((item, index) => { 
+        	if ((index > before_count) &&(index <= more) ){
+            	item.style.display = 'block';
+				show_items.appendChild(item);
+        	}
+    	});
+		if (more>600){ 
+			loadStop=false;
+			document.getElementById("loadTip").remove()
+		}
+	} catch (error) {
+        console.error('加載失敗:', error);
+    } finally {
+		loadingItem = false;
+	}
+}
+
+window.onscroll = () => {
+	if (!(loadStop)) return;
+    if (loadingItem) return;
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 6) {
+        loadingItem = true;
+        document.getElementById('loadTip').style.display = 'block';
+		setTimeout(loadMore, 2000);
+    }
+};
+
+</script>
+						</div>
+						<div class="stui-pannel__ft"></div>
+					</div>
+				</div>
+			</div>
+
+			<script type="text/javascript">
+				$(".open-screen").click(function () {
+					var display = $('#screenbox').css('display');
+					if (display == 'block') {
+						$("#screenbox").slideUp("slow");
+						$(this).html('展开 <i class="iconfont icon-moreunfold"></i>')
+					} else {
+						$("#screenbox").slideDown("slow");
+						$(this).html('收起 <i class="iconfont icon-less"></i>')
+					}
+				});
+			</script>
+			
+			 
+
+        </div>
+	</body>
+{include file="module/link_php"}
+</html>

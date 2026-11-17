@@ -1,0 +1,189 @@
+{include file="../../../application/admin/view/public/head" /}
+
+<div class="page-container p10">
+    <form class="layui-form layui-form-pane" method="post" action="">
+        <input id="link_id" name="link_id" type="hidden" value="{$info.link_id}">
+        <div class="layui-form-item">
+            <label class="layui-form-label">{:lang('name')}：</label>
+            <div class="layui-input-inline w500">
+                <input type="text" class="layui-input" value="{$info.link_name}" lay-verify="link_name" placeholder="" id="link_name" name="link_name">
+            </div>
+            <div class="layui-form-mid layui-word-aux">显示名称</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">{:lang('url')}：</label>
+            <div class="layui-input-inline w500">
+                <input type="text" class="layui-input" value="{$info.link_url}" lay-verify="link_url" placeholder="" id="link_url" name="link_url">
+            </div>
+            <div class="layui-form-mid layui-word-aux">外连需要加上http开头</div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">图片：</label>
+            <div class="layui-input-inline w500 upload">
+                <input type="text" class="layui-input upload-input" style="max-width:100%;" value="{$info.link_logo}" placeholder="" id="link_logo" name="link_logo">
+            </div>
+            <div class="layui-input-inline ">
+                <button type="button" class="layui-btn layui-upload" lay-data="{data:{thumb:1,thumb_class:'upload-thumb'}}" id="upload1">{:lang('upload_pic')}</button>
+            </div>
+        </div>
+
+        <!-- Imagr Height -->
+        <div class="layui-form-item">
+            <label class="layui-form-label">图片高度：</label>
+            <div class="layui-input-inline w500 upload">
+                <input type="text" class="layui-input upload-input" style="max-width:100%;" value="{$info.link_logo_height}" placeholder="" id="link_logo_height" name="link_logo_height">
+            </div>
+            <div class="layui-form-mid layui-word-aux">只对banner广告有效，输入数字，不需加上px</div>
+        </div>
+
+        <!-- Color -->
+        <div class="layui-form-item">
+            <label class="layui-form-label">文字颜色</label>
+            <div class="layui-input-inline w100">
+                <input type="text" class="layui-input" value="{$info.link_name_color}" name="link_name_color">
+            </div>
+            <div class="layui-input-inline w50">
+                <input type="color" class="layui-input custom-color-picker" value="{$info.link_name_color}" id="link_name_color" style="padding-left:0">
+            </div>
+            <div class="layui-form-mid layui-word-aux">只对文字广告有效</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">文字背景色</label>
+            <div class="layui-input-inline w100">
+                <input type="text" class="layui-input" value="{$info.link_background_color}" name="link_background_color">
+            </div>
+            <div class="layui-input-inline w50">
+                <input type="color" class="layui-input custom-color-picker" value="{$info.link_background_color}" id="link_background_color" style="padding-left:0">
+            </div>
+            <div class="layui-form-mid layui-word-aux">只对文字广告有效</div>
+        </div>
+        <!-- End Color -->
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">{:lang('sort')}：</label>
+            <div class="layui-input-inline w100">
+                <input type="text" class="layui-input" value="{$info.link_sort}" placeholder="" id="link_sort" name="link_sort">
+            </div>
+            <div class="layui-form-mid layui-word-aux">数字愈小愈靠前</div>
+        </div>
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label">点击</label>
+            <div class="layui-input-inline w100">
+                <input type="text" class="layui-input" value="{$info.link_max_clicks}" placeholder="" id="link_max_clicks" name="link_max_clicks">
+            </div>
+            <div class="layui-form-mid layui-word-aux">点击次数上限</div>
+        </div>
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label">权重</label>
+            <div class="layui-input-inline w100">
+                <input type="text" class="layui-input" value="{$info.link_weight}" placeholder="" id="link_weight" name="link_weight">
+            </div>
+            <div class="layui-form-mid layui-word-aux">点击次数上限</div>
+        </div>
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label">Rel</label>
+            <div class="layui-input-inline w100">
+                <input type="text" class="layui-input" value="{$info.link_rel}" placeholder="" id="link_rel" name="link_rel">
+            </div>
+            <div class="layui-form-mid layui-word-aux">点击次数上限</div>
+        </div>
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label">{:lang('genre')}：</label>
+            <div class="layui-input-inline">
+                <select class="w100" name="link_type">
+                    <option value="0" {if condition="$info['link_type'] eq 0"}selected {/if}>{:lang('admin/link/text_link')}</option>
+                    <option value="1" {if condition="$info['link_type'] eq 1"}selected {/if}>{:lang('admin/link/pic_link')}</option>
+                </select>
+            </div>
+        </div>
+      
+
+        <div class="layui-form-item center">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="formSubmit" data-child="true">{:lang('btn_save')}</button>
+                <button class="layui-btn layui-btn-warm" type="reset">{:lang('btn_reset')}</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+{include file="../../../application/admin/view/public/foot" /}
+
+<script type="text/javascript">
+    layui.use(['form','upload' ,'layer'], function () {
+        // 操作对象
+        var form = layui.form
+                , layer = layui.layer
+                , $ = layui.jquery
+                , upload = layui.upload;
+
+        // 验证
+        form.verify({
+            link_name: function (value) {
+                if (value == "") {
+                    return "{:lang('name_empty')}";
+                }
+            },
+            link_url: function (value) {
+                if (value == "") {
+                    return "{:lang('url_empty')}";
+                }
+            }
+        });
+
+        upload.render({
+            elem: '.layui-upload'
+            ,url: "{:url('upload/upload')}?flag=addon"
+            ,method: 'post'
+            ,before: function(input) {
+                layer.msg("{:lang('upload_ing')}", {time:3000000});
+            },done: function(res, index, upload) {
+                var obj = this.item;
+                if (res.code == 0) {
+                    layer.msg(res.msg);
+                    return false;
+                }
+                layer.closeAll();
+                var input = $(obj).parent().parent().find('.upload-input');
+                if ($(obj).attr('lay-type') == 'image') {
+                    input.siblings('img').attr('src', res.data.file).show();
+                }
+                input.val(res.data.file);
+
+            }
+        });
+
+
+        $('.upload-img').hover(function (e){
+            var e = window.event || e;
+            var imgsrc = $(this).val();
+            if(imgsrc.trim()==""){ return; }
+            var left = e.clientX+document.body.scrollLeft+20;
+            var top = e.clientY+document.body.scrollTop+20;
+            $(".showpic").css({left:left,top:top,display:""});
+            if(imgsrc.indexOf('://')<0){ imgsrc = ROOT_PATH + '/' + imgsrc;	} else{ imgsrc = imgsrc.replace('mac:','http:'); }
+            $(".showpic_img").attr("src", imgsrc);
+        },function (e){
+            $(".showpic").css("display","none");
+        });
+
+        $('.custom-color-picker').change(function(){
+            var color = $(this).val();
+            var id = $(this).attr('id');
+            $('input[name="'+ id +'"]').val(color);
+        });
+
+    });
+
+    
+</script>
+
+</body>
+</html>

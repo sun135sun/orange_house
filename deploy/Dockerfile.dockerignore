@@ -1,0 +1,15 @@
+# deploy/Dockerfile 專用：不放進映像檔的檔案（BuildKit 會優先讀 <Dockerfile 名稱>.dockerignore）
+.git
+.idea
+.vscode
+**/.DS_Store
+.env
+# deploy/ 整個不進映像檔（裡面有 1.3GB 的 db/db_mysql_data.sql）
+deploy
+sh_work
+说明文档
+runtime/cache/*
+runtime/temp/*
+runtime/log/*
+application/data/install/install.lock
+application/data/backup/database/*

@@ -1,0 +1,67 @@
+<!-- 廣告代碼生成 -->
+<div class="layui-tab-item">
+    <blockquote class="layui-elem-quote layui-text" style="margin:20px 0;border-left-color: #ff5722;">
+        <p>
+            圖片廣告代碼:<br> &lt;a href="目標連結" target="_blank"&gt;&lt;img src="圖片連結"&gt;&lt;/a&gt;
+        </p>
+    </blockquote>
+
+    <!-- 生成圖片 -->
+    <div class="layui-form-item">
+        <label class="layui-form-label w-300px">圖片地址</label>
+        <div class="layui-input-inline">
+            <input type="text" class="layui-input upload-input" id="generated_url">
+        </div>
+        <div class="layui-input-inline">
+            <button type="button" class="layui-btn layui-btn-primary layui-upload" lay-data="{data:{thumb:0,thumb_class:'site['image_generator']'}}">上傳圖片</button><input class="layui-upload-file" type="file" name="file">
+
+        </div>
+        <div class="layui-form-mid layui-word-aux">上傳後自己生成圖片連結，也可以輸入外部連結。</div>
+    </div>
+
+    <!-- 生成代碼 -->
+    <div class="layui-form-item mb-3">
+        <label class="layui-form-label w-300px">目標連結</label>
+        <div class="layui-input-inline mb-1">
+            <input type="text" placeholder="輸入目標連結" id="code-generator-link" class="layui-input">
+        </div>
+        <div class="layui-input-inline mb-1">
+            <input id="code-generator-new-window" class="layui-checkbox" type="checkbox" checked="">
+            <div class="layui-unselect layui-form-checkbox layui-form-checked" lay-skin=""><i class="layui-icon"></i>
+            </div>
+            <div class="layui-form-mid layui-word-aux">新視窗打開</div>
+        </div>
+        <div class="layui-input-inline mb-1">
+            <button type="button" class="layui-btn layui-btn-primary btn-code-generator">生成代碼</button>
+        </div>
+
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">生成代碼</label>
+        <div class="layui-input-block">
+            <textarea id="code-generator-output" class="w-100 layui-textarea" rows="5"></textarea>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    //code generator
+    $('.btn-code-generator').on('click', function() {
+        var code_generator_link = document.getElementById('code-generator-link').value;
+        var code_generator_image = document.getElementById('generated_url').value;
+
+        if (!code_generator_image.startsWith('http')) {
+            if (!code_generator_image.startsWith('/')) {
+                code_generator_image = '/' + code_generator_image;
+            }
+        }
+
+        var code_generator_output = document.getElementById('code-generator-output');
+        var code_generator_new_window = document.getElementById('code-generator-new-window');
+        var generated_code = "<a href='" + code_generator_link + "' " + (code_generator_new_window.checked ? "target='_blank'" : "") + "><img src='" + code_generator_image + "'></a>";
+        code_generator_output.value = generated_code;
+
+    })
+</script>

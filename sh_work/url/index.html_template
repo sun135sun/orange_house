@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+
+<html lang="zh-cn">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>GGMIMICC｜啾咪探探｜官方网站｜爆料网｜抖音</title>
+    <meta
+      name="description"
+      content="GGMIMICC｜啾咪探探｜官方网站｜爆料网｜抖音 最用心的手机游戏发行平台，用心打造每一款手游！线上看，高速播放不延迟，超过十万部影片，每日更新"
+    />
+    <meta
+      name="keywords"
+      content="GGMIMICC,啾咪探探,GG,MIMI,官方网站,Papapa,pa,爆料网,抖音,手机游戏,手游,影片分享,线上看,高速播放不延迟,超过十万部影片,每日更新"
+    />
+    <meta name="Robots" content="All" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: #dae1e8ff;
+        color: rgba(4, 7, 9, 0.95);
+        font-family: "Microsoft YaHei", Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        text-align: center;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 600px;
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 28px;
+        margin-bottom: 30px;
+        font-weight: 500;
+      }
+
+      .loading-container {
+        margin: 40px 0;
+      }
+
+      .loading-spinner {
+        width: 60px;
+        height: 60px;
+        border: 5px solid rgba(183, 202, 215, 0.3);
+        border-top: 5px solid #7999aeff;
+        border-radius: 50%;
+        margin: 0 auto 20px;
+        animation: spin 1.5s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .loading-text {
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+      .loading-text a {
+        font-size: 18px;
+        margin-bottom: 10px;
+        color: rgba(234, 239, 242, 0.95);
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 6px;
+        background-color: rgba(52, 152, 219, 0.2);
+        border-radius: 3px;
+        overflow: hidden;
+        margin: 20px auto;
+      }
+
+      .progress {
+        height: 100%;
+        width: 0%;
+        background-color: #3498db;
+        animation: progress 5s linear forwards;
+      }
+
+      @keyframes progress {
+        0% {
+          width: 0%;
+        }
+        100% {
+          width: 100%;
+        }
+      }
+
+      .hint {
+        font-size: 14px;
+        color: rgba(52, 152, 219, 0.7);
+        margin-top: 30px;
+      }
+
+      /* 响应式设计 */
+      @media (max-width: 480px) {
+        h1 {
+          font-size: 22px;
+        }
+
+        .loading-text {
+          font-size: 16px;
+        }
+        .loading-text a {
+          color: rgba(234, 239, 242, 0.95);
+        }
+      }
+    </style>
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-ZQ9RBXGV28"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-ZQ9RBXGV28");
+    </script>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>正在为你跳转最新可用的访问域名，请稍候.....</h1>
+
+      <div class="loading-container">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">
+          <a href="javascript:noWait()">无需等待，点击进入。</a>
+        </div>
+      </div>
+
+      <div class="progress-bar">
+        <div class="progress"></div>
+      </div>
+
+      <div class="hint">如果长时间没有跳转，请检查网络连接</div>
+    </div>
+
+    <span class="time"></span>
+
+    <script>
+      var sub_str = "TSub";
+      var tdn_str = "TDname";
+      var html_go = "https://" + sub_str + "." + tdn_str;
+      html_go += ".top";
+      html_go += "/papapa/";
+
+      function noWait() {
+        var Uhttp = document.referrer;
+        Uhttp = Uhttp.replace("https://", "");
+        Uhttp = Uhttp.replace("http://", "");
+
+        if (Uhttp.indexOf("/") != -1) {
+          Uhttp = Uhttp.substring(0, Uhttp.indexOf("/"));
+        }
+        if (Uhttp.indexOf("?") != -1) {
+          Uhttp = Uhttp.substring(0, Uhttp.indexOf("?"));
+        }
+        if (Uhttp.substr(-1) == "/") {
+          Uhttp = Uhttp.substring(0, Uhttp.length - 1);
+        }
+        location.href = html_go + "?link=" + Uhttp;
+      }
+
+      var t = 1;
+      var time = document.getElementsByClassName("time")[0];
+      function fun() {
+        t--;
+        time.innerHTML = t;
+        if (t <= 0) {
+          var Uhttp = document.referrer;
+          Uhttp = Uhttp.replace("https://", "");
+          Uhttp = Uhttp.replace("http://", "");
+          if (Uhttp.indexOf("/") != -1) {
+            Uhttp = Uhttp.substring(0, Uhttp.indexOf("/"));
+          }
+          if (Uhttp.indexOf("?") != -1) {
+            Uhttp = Uhttp.substring(0, Uhttp.indexOf("?"));
+          }
+          if (Uhttp.substr(-1) == "/") {
+            Uhttp = Uhttp.substring(0, Uhttp.length - 1);
+          }
+          location.href = html_go + "?link=" + Uhttp;
+          clearInterval(inter);
+        }
+      }
+      var inter = setInterval("fun()", 500);
+    </script>
+  </body>
+</html>

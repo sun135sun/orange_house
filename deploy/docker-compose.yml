@@ -1,0 +1,89 @@
+# 舊站（cms_template）本機測試環境：web (PHP 7.4 + Apache) + MySQL 5.7 + Redis
+# 用法（在 cms_template/deploy 目錄）：docker compose up -d --build
+# 網址 http://localhost:8081 ，MySQL localhost:3308；和 code/server_app（8080 / 3307）可以同時跑
+# 所有設定都寫在這個檔裡，不需要 .env
+name: cms_template
+
+services:
+  web:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    image: cms_template-web
+    container_name: cms_template_web
+    environment:
+      TZ: Asia/Taipei
+      # ThinkPHP 讀 PHP_ 開頭的環境變數（application/database.php、common/behavior/Init.php）
+      PHP_DATABASE_HOSTNAME: mysql
+      PHP_DATABASE_HOSTPORT: 3306
+      PHP_DATABASE_DATABASE: 18av999_com
+      PHP_DATABASE_USERNAME: 18av999_com
+      PHP_DATABASE_PASSWORD: change_me
+      PHP_CACHE_HOST: redis
+      PHP_CACHE_PORT: 6379
+      # true = 頁面顯示 ThinkPHP 錯誤細節
+      PHP_APP_DEBUG: "false"
+      # 後台 hwyayl.php 與 /api.php/link/fetch、reset 額外允許的 IP
+      # 從本機瀏覽器連進來時，容器看到的來源 IP 是下面 networks 的 gateway
+      PHP_ADMIN_ALLOWED_IPS: 172.30.81.1
+    ports:
+      - "8081:80"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    restart: unless-stopped
+
+  mysql:
+    image: mysql:5.7.44
+    # mysql 5.7 官方映像只有 amd64，Apple Silicon 需要模擬
+    platform: linux/amd64
+    container_name: cms_template_mysql
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_general_ci
+      - --max_allowed_packet=512M
+      - --sql_mode=NO_ENGINE_SUBSTITUTION
+      - --key_buffer_size=512M
+      - --myisam_sort_buffer_size=256M
+      - --bulk_insert_buffer_size=256M
+    environment:
+      MYSQL_ROOT_PASSWORD: change_me_root
+      MYSQL_DATABASE: 18av999_com
+      MYSQL_USER: 18av999_com
+      MYSQL_PASSWORD: change_me
+      TZ: Asia/Taipei
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      # 第一次啟動（volume 為空）時自動匯入備份；之後重啟不會再匯入
+      - ./db/db_mysql_data.sql:/docker-entrypoint-initdb.d/10-db_mysql_data.sql:ro
+    healthcheck:
+      # 匯入期間 entrypoint 只開 socket，不開 TCP；用 TCP 檢查才能確保匯入完成
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p\"$$MYSQL_ROOT_PASSWORD\" --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      # 1.3GB 備份匯入需要很久
+      start_period: 3600s
+    restart: unless-stopped
+
+  redis:
+    # 後台「系统 → 缓存」設定是 redis
+    image: redis:7.2-alpine
+    container_name: cms_template_redis
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    restart: unless-stopped
+
+networks:
+  default:
+    # 固定網段，PHP_ADMIN_ALLOWED_IPS 才能事先填好閘道 IP
+    ipam:
+      config:
+        - subnet: 172.30.81.0/24
+          gateway: 172.30.81.1
+
+volumes:
+  mysql_data:

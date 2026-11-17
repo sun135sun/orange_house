@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>dplayer播放器</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=11" />
+	<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport" name="viewport">
+	<style type="text/css">
+	html,body{width:100%;height:100%; padding:0; margin:0;}
+	#playerCnt{width:100%;height:100%;}
+	</style>
+	<link rel="stylesheet" href="/static/player/dplayer/DPlayer.min.css">
+	<script type="text/javascript" src="/static/player/dplayer/flv.min.js"></script>
+	<script type="text/javascript" src="/static/player/dplayer/hls.min.js"></script>
+	<script type="text/javascript" src="/static/player/dplayer/dash.all.min.js"></script>
+	<script type="text/javascript" src="/static/player/dplayer/webtorrent.min.js"></script>
+	<script type="text/javascript" src="/static/player/dplayer/DPlayer.min.js"></script>
+</head>
+<body marginwidth="0" marginheight="0">
+<div id="playerCnt"></div>
+<script type="text/javascript">
+    var url = parent.MacPlayer.PlayUrl;
+    var type = 'normal';
+
+    if (url.indexOf('.m3u8') > -1) {
+        type = 'macHls';
+    }
+    else if (url.indexOf('magnet:') > -1) {
+        type = 'webtorrent';
+    }
+    else if (url.indexOf('.flv') > -1) {
+        type = 'flv';
+    }
+    else if (url.indexOf('.mpd') > -1) {
+        type = 'dash';
+    }
+
+    // 自己接管 HLS：優先用 hls.js，不支援才退回原生（手機），並把錯誤印到 Console
+    function playHls(video, player) {
+        if (window.Hls && Hls.isSupported()) {
+            var hls = new Hls({ maxBufferLength: 30 });
+            var mediaRecovered = false;
+
+            hls.on(Hls.Events.ERROR, function (event, data) {
+                console.error('[hls]', data.type, data.details, 'fatal=' + data.fatal,
+                    data.response ? ('HTTP ' + data.response.code) : '', data.url || '');
+                if (!data.fatal) return;
+                if (data.type === Hls.ErrorTypes.NETWORK_ERROR) {
+                    player.notice('片源載入失敗（' + data.details + '）', 5000);
+                    hls.startLoad();
+                } else if (data.type === Hls.ErrorTypes.MEDIA_ERROR && !mediaRecovered) {
+                    mediaRecovered = true;
+                    hls.recoverMediaError();
+                } else {
+                    player.notice('播放失敗：' + data.details, 0);
+                    hls.destroy();
+                }
+            });
+
+            hls.loadSource(url);
+            hls.attachMedia(video);
+            player.on('destroy', function () { hls.destroy(); });
+        }
+        else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = url;
+        }
+        else {
+            console.error('[hls] hls.js 未載入 (typeof Hls = ' + typeof Hls + ')，瀏覽器也不支援原生 HLS');
+            player.notice('播放器元件載入失敗，請重新整理', 0);
+        }
+    }
+
+    var dp = new DPlayer({
+        container: document.getElementById('playerCnt'),
+        autoplay: true,
+        screenshot: false,
+        video: {
+            url: url,
+            type: type,
+            customType: {
+                macHls: playHls
+            }
+        },
+        contextmenu: []
+    });
+
+    dp.on('ended', function () {
+        if (parent.MacPlayer.PlayLinkNext != '') {
+            top.location.href = parent.MacPlayer.PlayLinkNext;
+        }
+    });
+</script>
+</body>
+</html>

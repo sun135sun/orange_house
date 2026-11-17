@@ -1,0 +1,67 @@
+{if($wn_floating)}
+    {maccms:link type="pic" order="asc" by="sort" num="9999"}
+        {if($vo.link_sort == 9001)}
+        <div class="wn_floating wn_floating_top_wrapper">
+            <div class="wn_floating_image_wrapper">
+                <a href="{$vo.link_url}" target="_blank" rel="{$vo.link_rel}">
+                    <img src="{:mac_url_img($vo.link_logo)}">
+                </a>
+                <div class="wn_floating_close_button wn_floating_close_button_top"><span>x</span></div>
+            </div>
+            <div class="wn_floating_close_text wn_floating_close_text_top">{:lang('关闭广告')}</div>
+        </div>
+        {/if}
+    {/maccms:link}
+
+    {maccms:link type="pic" order="asc" by="sort" num="9999"}
+        {if($vo.link_sort == 9002)}
+        <div class="wn_floating wn_floating_bottom_wrapper">
+            <div class="wn_floating_close_text wn_floating_close_text_bottom">{:lang('关闭广告')}</div>
+            <div class="wn_floating_image_wrapper">
+                <a href="{$vo.link_url}" target="_blank" rel="{$vo.link_rel}">
+                    <img src="{:mac_url_img($vo.link_logo)}">
+                </a>
+                <div class="wn_floating_close_button wn_floating_close_button_bottom"><span>x</span></div>
+            </div>
+        </div>
+        {/if}
+    {/maccms:link}
+
+    {maccms:link type="pic" order="asc" by="sort" num="9999"}
+        {if($vo.link_sort == 9003)}
+        <div class="wn_floating wn_floating_left_wrapper">
+            <div class="wn_floating_image_wrapper">
+                <a href="{$vo.link_url}" target="_blank" rel="{$vo.link_rel}">
+                    <img src="{:mac_url_img($vo.link_logo)}">
+                </a>
+                <div class="wn_floating_close_button wn_floating_close_button_left"><span>x</span></div>
+            </div>
+            <div class="wn_floating_close_text wn_floating_close_text_left">{:lang('关闭广告')}</div>
+        </div>
+        {/if}
+    {/maccms:link}
+
+    {maccms:link type="pic" order="asc" by="sort" num="9999"}
+        {if($vo.link_sort == 9004)}
+        <div class="wn_floating wn_floating_right_wrapper">
+            <div class="wn_floating_image_wrapper">
+                <a href="{$vo.link_url}" target="_blank" rel="{$vo.link_rel}">
+                    <img src="{:mac_url_img($vo.link_logo)}">
+                </a>
+                <div class="wn_floating_close_button wn_floating_close_button_right"><span>x</span></div>
+            </div>
+            <div class="wn_floating_close_text wn_floating_close_text_right">{:lang('关闭广告')}</div>
+        </div>
+        {/if}
+    {/maccms:link}
+
+
+    <script>
+        $('.wn_floating_close_text').on('click',function(){
+            $(this).parent().fadeOut();
+        })
+        $('.wn_floating').on('click',function(){
+            $(this).fadeOut();
+        })
+    </script>
+{/if}

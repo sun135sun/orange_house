@@ -1,0 +1,280 @@
+{include file="../../../application/admin/view/public/head" /}
+
+<div class="page-container">
+
+    <div class="showpic" style="display:none;"><img class="showpic_img" width="120" height="160"></div>
+
+    <form class="layui-form layui-form-pane" action="">
+
+        <input type="hidden" name="__token__" value="{$Request.token}" />
+        <div class="layui-tab" lay-filter="tb1">
+
+            {php} 
+
+                $sample = [
+                    [
+                        'name'=>'分頁1',
+                        'options'=>[
+                            ['type'=>'heading','text'=>'標題'],
+                            ['type'=>'text','text'=>'文字','name'=>'text1','placeholder'=>'這裡是placeholder文字',],
+                            ['type'=>'textarea','text'=>"文本",'name'=>'textarea1','placeholder'=>'這裡是placeholder文字',],
+                            ['type'=>'image','text'=>'圖片','name'=>'image1','placeholder'=>'這裡是placeholder文字',],
+                            ['type'=>'select','text'=>'選擇','name'=>'select1','placeholder'=>'這裡是placeholder文字','choices'=>['0'=>'關閉', '1'=>'開啟','2'=>'第三選項'],],
+                            ['type'=>'radio','text'=>'單選','name'=>'radio1','placeholder'=>'這裡是placeholder文字','choices'=>['0'=>'關閉','1'=>'開啟','2'=>'第三選項'],],
+                            ['type'=>'radio','text'=>'開闢','name'=>'radio_example','placeholder'=>'這裡是placeholder文字','choices'=>['0'=>'關閉', '1'=>'開啟']],
+                            ['type'=>'checkbox','text'=>'多選框','name'=>'checkbox1','placeholder'=>'這裡是placeholder文字','choices'=>['aaa'=>'選擇A','bbb'=>'選擇B','ccc'=>'選擇C'],'skin'=>'primary'],
+                        ],
+                    ],
+                    [
+                        'name'=>'分頁2',
+                        'options'=>[
+                            ['type'=>'text','text'=>'文字','name'=>'text1','placeholder'=>'這裡是placeholder文字',],
+                            ['type'=>'textarea','text'=>"文本",'name'=>'textarea1','placeholder'=>'這裡是placeholder文字',],
+                            ['type'=>'image','text'=>'圖片','name'=>'image1','placeholder'=>'這裡是placeholder文字',],
+                            ['type'=>'select','text'=>'選擇','name'=>'select1','placeholder'=>'這裡是placeholder文字','choices'=>['0'=>'關閉', '1'=>'開啟','2'=>'第三選項'],],
+                            ['type'=>'radio','text'=>'單選','name'=>'radio1','placeholder'=>'這裡是placeholder文字','choices'=>['0'=>'關閉', '1'=>'開啟','2'=>'第三選項'],],
+                            ['type'=>'checkbox','text'=>'多選框','name'=>'checkbox1','placeholder'=>'這裡是placeholder文字','choices'=>['aaa'=>'選擇A', 'bbb'=>'選擇B','ccc'=>'選擇C'],'skin'=>'primary'],
+                        ],
+                    ], 
+                ];
+
+                $tabs = [
+                    [
+                        'name'=>'暗跳设定', 
+                        'options'=>[
+                            //['type'=>'text','text'=>'輪播列表數量','name'=>'random_vodlist_ads_count', "placeholder" => "例如設定為2，每個列表中會出現2個隨機廣告"],
+                            //['type'=>'text','text'=>'輪播影片列表class','name'=>'random_vodlist_ads_vodlist_class', "placeholder" => "只會在特定的class中生成輪播廣告"],
+                            //['type'=>'text','text'=>'輪播影片Box class','name'=>'random_vodlist_ads_vodlist_box_class', "placeholder" => "只會替換特定的class中影片內容"],
+                            //['type'=>'text','text'=>'輪播影片圖片class','name'=>'random_vodlist_ads_vodlist_image_class', "placeholder" => "只會替換特定的class中圖片"],
+                            //['type'=>'text','text'=>'輪播影片標題class','name'=>'random_vodlist_ads_vodlist_title_class', "placeholder" => "只會替換特定的class中標題"],
+                            //['type'=>'text','text'=>'輪播影片連結class','name'=>'random_vodlist_ads_vodlist_link_class', "placeholder" => "只會替換特定的class中連結"],
+                            
+                          ['type'=>'heading','text'=>'文字'],
+                          ['type'=>'text','text'=>'暗链class','name'=>'hidden_ads_css_selector', "placeholder" => "只會在特定的class中触发暗链"],
+                          ['type'=>'text','text'=>'暗跳機率','name'=>'jump_chance'],
+                          ['type'=>'text','text'=>'暗跳上限','name'=>'jump_limit'],
+                          ['type'=>'heading','text'=>'视频'],
+                          ['type'=>'text','text'=>'暗链class2','name'=>'hidden_ads_css_selector2', "placeholder" => "只會在特定的class中触发暗链"],
+                          ['type'=>'text','text'=>'暗跳機率2','name'=>'jump_chance2'],
+                          ['type'=>'text','text'=>'暗跳上限2','name'=>'jump_limit2'], 
+                        ]
+                    ], 
+                ];
+
+                //print_r($config);
+                // include file='module/banner_ads' slot="desktop_home_below_categories"
+                
+            {/php}
+
+
+
+
+
+            <!-- Tabs -->
+            <ul class="layui-tab-title">
+                <li class="layui-this" lay-id="config_{$key}">歡迎使用</li>
+                {maccms:foreach name="$tabs" id="tab" key="key"}
+                <li lay-id="config_{$key}">{$tab[name]}</li>
+                {/maccms:foreach}
+                <li lay-id="config_ads_generator">廣告代碼生成</li>
+            </ul>
+
+            <!-- Content -->
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    {include file="../../../application/admin/view/custom/intro" /}
+                </div>
+
+                <!-- 自訂分頁內容 -->
+                {maccms:foreach name="$tabs" id="tab_content" key="key"}
+                    <div class="layui-tab-item">
+
+                        {maccms:foreach name="$tab_content['options']" id="option" key="option_index"}
+
+                            {if($option[type] == 'text')}  {include file="../../../application/admin/view/custom/input/text" /} {/if}
+                            {if($option[type] == 'textarea')}  {include file="../../../application/admin/view/custom/input/textarea" /} {/if}
+                            {if($option[type] == 'select')}  {include file="../../../application/admin/view/custom/input/select" /} {/if}
+                            {if($option[type] == 'image')}  {include file="../../../application/admin/view/custom/input/image" /} {/if}
+                            {if($option[type] == 'radio')}  {include file="../../../application/admin/view/custom/input/radio" /} {/if}
+                            {if($option[type] == 'checkbox')}  {include file="../../../application/admin/view/custom/input/checkbox" /} {/if}
+
+                            {if($option[type] == 'heading')}
+                                {if ($option_index != 0) }
+                                <h2 style="margin-top:50px;margin-bottom: 10px;">{$option['text']}</h2> 
+                                {else}
+                                <h2 style="margin-bottom: 10px;">{$option['text']}</h2> 
+                                {/if}
+                            {/if}
+                            
+                        {/maccms:foreach}
+
+                    </div>
+                {/maccms:foreach}
+                {include file="../../../application/admin/view/custom/ads_generator" /}
+
+            </div>
+
+        </div>
+
+        <!-- Submit -->
+        <div class="layui-form-item center" style="padding:30px;">
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="formSubmit" style="width:100%;">儲存設定</button>
+        </div>
+
+    </form>
+</div>
+
+
+
+{include file="../../../application/admin/view/public/foot" /}
+<script type="text/javascript" src="__STATIC__/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    layui.use(['form', 'upload', 'layer'], function () {
+        // 操作物件
+        var element = layui.element,
+            form = layui.form,
+            layer = layui.layer,
+            upload = layui.upload;
+
+        form.on('radio(cache_type)', function (data) {
+            $('.row_cache_server').hide();
+            if (data.value == 'memcache' || data.value == 'redis' || data.value == 'memcached') {
+                $('.row_cache_server').show();
+            }
+        });
+        //! 記錄最後停留頁面
+        element.on('tab(tb1)', function () {
+            $.cookie('config_tab', this.getAttribute('lay-id'));
+        });
+
+        if ($.cookie('config_tab') != null) {
+            element.tabChange('tb1', $.cookie('config_tab'));
+        }
+
+
+        // 上傳文件
+        upload.render({
+            elem: '.layui-upload',
+            url: "{:url('upload/upload')}?flag=site",
+            method: 'post',
+            before: function (input) {
+                layer.msg('文件上傳中...', {
+                    time: 3000000
+                });
+            },
+            done: function (res, index, upload) {
+                var obj = this.item;
+                if (res.code == 0) {
+                    layer.msg(res.msg);
+                    return false;
+                }
+                layer.closeAll();
+                var input = $(obj).parent().parent().find('.upload-input');
+                if ($(obj).attr('lay-type') == 'image') {
+                    input.siblings('img').attr('src', res.data.file).show();
+                }
+                input.val(res.data.file);
+
+                if (res.data.thumb_class != '') {
+                    $('.' + res.data.thumb_class).val(res.data.thumb[0].file);
+                }
+            }
+        });
+
+        // Mouseover 顯示已上傳的圖片
+        $('.upload-input').hover(function (e) {
+            var e = window.event || e;
+            var imgsrc = $(this).val();
+            if (imgsrc.trim() == "") {
+                return;
+            }
+            var left = e.clientX + document.body.scrollLeft + 20;
+            var top = e.clientY + document.body.scrollTop + 20;
+            $(".showpic").css({
+                left: left,
+                top: top,
+                display: ""
+            });
+            if (imgsrc.indexOf('://') < 0) {
+                imgsrc = ROOT_PATH + '/' + imgsrc;
+            } else {
+                imgsrc = imgsrc.replace('mac:', 'http:');
+            }
+            $(".showpic_img").attr("src", imgsrc);
+        }, function (e) {
+            $(".showpic").css("display", "none");
+        });
+
+    });
+
+    function test_cache() {
+        var type = $("input[name='app[cache_type]']:checked").val();
+        var host = $("input[name='app[cache_host]']").val();
+        var port = $("input[name='app[cache_port]']").val();
+        var user_name = $("input[name='app[cache_username]']").val();
+        var password = $("input[name='app[cache_password]']").val();
+        layer.msg('資料提交中...', {
+            time: 500000
+        });
+        $.ajax({
+            url: "{:url('system/test_cache')}",
+            type: "post",
+            dataType: "json",
+            data: {
+                type: type,
+                host: host,
+                port: port,
+                username: user_name,
+                password: password
+            },
+            beforeSend: function () { },
+            error: function (r) {
+                layer.msg('發生錯誤，請檢查是否開啟擴展庫和配置項!', {
+                    time: 1800
+                });
+            },
+            success: function (r) {
+                layer.msg(r.msg, {
+                    time: 1800
+                });
+            },
+            complete: function () { }
+        });
+    }
+
+    //code generator
+    $('.btn-code-generator').on('click', function () {
+        var code_generator_link = document.getElementById('code-generator-link').value;
+        var code_generator_image = document.getElementById('code-generator-image').value;
+        var code_generator_output = document.getElementById('code-generator-output');
+        var code_generator_new_window = document.getElementById('code-generator-new-window');
+        var generated_code = "<a href='" + code_generator_link + "' " + (code_generator_new_window.checked ? "target='_blank'" : "") + "><img src='" + code_generator_image + "'></a>";
+        code_generator_output.value = generated_code;
+
+    })
+
+
+    //監聽狀態操作
+    // form.on('switch(status)', function(obj){
+    //     var id = $(this).attr('mid');
+    //     var status='';
+    //     obj.elem.checked?status='on':status='off';
+    //     util.sendAjax ({
+    //         type: 'POST',
+    //         url: '#(ctxPath)/bnk/admin/followUpTemplate/upDateStatus',
+    //         data: {id : id, status : status},
+    //         loadFlag: true,
+    //         success : function(data){
+    //             layer.msg("啟用成功");
+    //             reloadTableQuery();
+    //         },
+    //         unSuccess: function (data) {
+    //             layer.msg("修改失敗");
+    //         }
+    //     })
+    // });
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        {include file="public/include"}
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+        <title>{:unicode_encode($maccms.site_name)} </title>
+		<meta name="keywords" content="{:unicode_encode($maccms.site_keywords)}" />
+		<meta name="description" content="{:unicode_encode($maccms.site_description)}"> 
+        <meta name="Robots" content="All"/>
+    </head>
+    <body>
+        <div class="container"> 
+            <div class="row">
+                <div class="stui-pannel">
+                    <div class="stui-pannel__hd">
+                        {include file="public/header"}
+                        <div class="stui-pannel__bd clearfix">
+                            <h2 style="color:white;font-weight:bold;font-size:24px;padding-left:5px;">今日</h2>
+                            <ul class="stui-vodlist clearfix">
+                                {maccms:vod by="time,id" order="desc,desc" num="200"}
+                                {include file="module/rand_vodlist"}
+                                {/maccms:vod}
+                             </ul>
+                        </div>
+                    </div>
+                </div>
+<script>
+// 前端隨機選擇
+document.addEventListener('DOMContentLoaded', function() {
+    const items = document.querySelectorAll('.ideo-itemv');
+    const allItems = Array.from(items);
+    
+    // 隨機打亂
+    //const shuffled = allItems.sort(() => Math.random() - 0.5);
+    const shuffled = shuffleArray(allItems);
+    // 隱藏多餘的項目，只顯示300個
+    shuffled.forEach((item, index) => {
+        if (index >= 32) {
+            item.style.display = 'none';
+        }
+    });
+});
+
+function shuffleArray(array) {
+    const shuffleds = [...array]; // 创建副本，避免修改原数组
+    for (let i = shuffleds.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffleds[i], shuffleds[j]] = [shuffleds[j], shuffleds[i]];
+    }
+    return shuffleds;
+}
+ 
+</script>
+                
+                {include file="public/footer"}
+            </div>
+        </div>
+
+    </body>
+
+</html>

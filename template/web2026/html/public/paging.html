@@ -1,0 +1,51 @@
+<div class="stui-pannel__ft">
+    <ul class="stui-page__item text-center clearfix">
+        <!-- Home -->
+        <li><a href="{$__PAGING__.page_url|mac_url_page=1}">首页</a></li>
+
+        <!-- Previous Page -->
+        <li>
+            {if condition="$__PAGING__.page_current > 1"}
+            <a href="{$__PAGING__.page_url|mac_url_page=$__PAGING__.page_prev}">上一页</a>
+            {else/}
+            <span class="disabled">上一页</span>
+            {/if}
+        </li>
+
+        <!-- Numbered Pages -->
+        {maccms:foreach name="$__PAGING__.page_num" id="num"}
+        <li class="hidden-xs {if condition='$__PAGING__.page_current eq $num'}active{/if}">
+            <a href="{$__PAGING__.page_url|mac_url_page=$num}">{$num}</a>
+        </li>
+        {/maccms:foreach}
+
+        <!-- Current Page Display -->
+        <li class="active num">
+            <a>{$__PAGING__.page_current}/{$__PAGING__.page_total}</a>
+        </li>
+
+        <!-- Next Page -->
+        <li>
+            {if condition="$__PAGING__.page_current < $__PAGING__.page_total"}
+            <a href="{$__PAGING__.page_url|mac_url_page=$__PAGING__.page_next}">下一页</a>
+            {else/}
+            <span class="disabled">下一页</span>
+            {/if}
+        </li>
+
+        <!-- Last Page -->
+        <li><a href="{$__PAGING__.page_url|mac_url_page=$__PAGING__.page_total}">尾页</a></li>
+        
+    </ul>
+        
+    <!-- Jump to Page Section -->
+    <div style="display: flex;align-items: center;justify-content: center;">
+        <input type="text" id="jump_page" placeholder="页码" style="width: 62px;height:33px;color: black;border: 1px solid #26645D; display:inline-block;text-align: center;">
+        <button class="page_link" style="width: 70px;height:33px;color: #fff;background-color:#252527;border:0px; display:inline-block;" type="button"
+            onclick="location.href='{$__PAGING__.page_url|mac_url_page="__jump__"}'.replace('__jump__',document.getElementById('jump_page').value)">
+            跳转
+        </button>
+    </div>
+
+    
+</div>

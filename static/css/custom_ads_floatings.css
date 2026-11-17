@@ -1,0 +1,174 @@
+/**
+* 作者: 文尼先生
+* 模組: 升級友連系統專用 - 浮窗模組
+* 系統: maccms v10
+* 官網: https://3dayseo.com
+* 更多: https://wntheme.com
+*/
+
+:root{
+    /* 通用 */
+    --wn-floating-z-index: 99999;
+    --wn-floating-image-border-radius:0px;
+    --wn-floating-y-image-width:720px;
+    --wn-floating-y-image-height:90px;
+    --wn-floating-desktop-x-image-width:120px;
+    --wn-floating-desktop-x-image-height:120px;
+    --wn-floating-mobile-x-image-width:80px;
+    --wn-floating-mobile-x-image-height:80px;
+    --wn-floaing-image-object-fit:fill;
+
+    /* display: none | block */
+    --wn-floating-close-text-display:block;
+    --wn-floating-close-text-font-size:12px;
+    --wn-floating-close-text-color: white;
+    --wn-floating-close-background-color: rgba(73, 73, 73, 0.253);
+
+    /* display: none | flex */
+    --wn-floating-close-button-display: none;
+    --wn-floating-close-button-size: 15px;
+    --wn-floating-close-button-top: 0;
+    --wn-floating-close-button-left: auto;
+    --wn-floating-close-button-bottom: auto;
+    --wn-floating-close-button-right: 0;
+    --wn-floating-close-button-font-size: 0.5rem;
+    --wn-floating-close-button-color: red;
+    --wn-floating-close-button-background-color: white;
+}
+
+
+/* 通用 */
+.wn_floating{
+    position: fixed;
+    margin: 0 auto;
+    z-index: var(--wn-floating-z-index);
+}
+
+.wn_floating a{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    /* display:block; */
+}
+
+.wn_floating_image_wrapper{
+    position: relative;
+    text-align: center;
+}
+
+.wn_floating img{
+    max-width: 100%;
+    border-radius: var(--wn-floating-image-border-radius);
+    object-fit: var(--wn-floaing-image-object-fit);
+}
+
+
+/* 上下 */
+.wn_floating_top_wrapper img , .wn_floating_bottom_wrapper img{
+    width: var(--wn-floating-desktop-y-image-width);
+    height: var(--wn-floating-desktop-y-image-height);
+}
+
+
+/* 左右 */
+.wn_floating_left_wrapper img , .wn_floating_right_wrapper img{
+    width: var(--wn-floating-desktop-x-image-width);
+    height: var(--wn-floating-desktop-x-image-height);
+}
+
+@media screen and (max-width:768px){
+    /* 上下 */
+    .wn_floating_top_wrapper, .wn_floating_bottom_wrapper{
+        width: 100%;
+    }
+    .wn_floating_top_wrapper img , .wn_floating_bottom_wrapper img{
+        height: var(--wn-floating-mobile-x-image-height);
+    }
+    /* 左右 */
+    .wn_floating_left_wrapper img , .wn_floating_right_wrapper img{
+        width: var(--wn-floating-mobile-x-image-width);
+        height: var(--wn-floating-mobile-x-image-height);
+    }
+}
+
+
+/* 上位移 */
+.wn_floating_top_wrapper{
+    left: 50%;
+    top:0;
+    transform: translateX(-50%);
+}
+
+.wn_floating_close_text_top{
+    width: 100%;
+    padding: 1px 0;
+}
+
+
+/* 下位移 */
+.wn_floating_bottom_wrapper{
+    left: 50%;
+    bottom: -3px;
+    transform: translateX(-50%);
+}
+
+.wn_floating_close_text_bottom{
+    width: 100%;
+    padding: 1px 0;
+}
+
+
+/* 左位移 */
+.wn_floating_left_wrapper{
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+}
+
+/* 右位移 */
+.wn_floating_right_wrapper{
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+}
+
+/* Cloasing button */
+.wn_floating_close_text_top , .wn_floating_close_text_left, .wn_floating_close_text_right{
+    margin-top:-3px;
+}
+
+.wn_floating .wn_floating_close_text{
+    display: var(--wn-floating-close-text-display);
+    background-color: var(--wn-floating-close-background-color);
+    color: var(--wn-floating-close-text-color);
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    padding: 3px 0;
+    font-size: var(--wn-floating-close-text-font-size);
+}
+
+
+/* Closing button */
+.wn_floating_close_button{
+    cursor: pointer;
+    position: absolute;
+    top:var(--wn-floating-close-button-top);
+    left:var(--wn-floating-close-button-left);
+    bottom: var(--wn-floating-close-button-bottom);
+    right:var(--wn-floating-close-button-right);
+
+    width: var(--wn-floating-close-button-size);
+    height: var(--wn-floating-close-button-size);
+    margin:5px;
+    border-radius: 20px;
+    z-index: var(--wn-floating-z-index);
+    
+    display: var(--wn-floating-close-button-display);
+    justify-content: center;
+    align-items: center;
+    color:var(--wn-floating-close-button-color);
+    font-size: var(--wn-floating-close-button-font-size);
+    font-weight: bold;
+    background-color: var(--wn-floating-close-button-background-color);
+}

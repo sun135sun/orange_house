@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ckplayerx3播放器</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11" />
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport" name="viewport">
+
+<style type="text/css">
+html,body{width:100%;height:100%; padding:0; margin:0;}
+#playerCnt{width:100%;height:100%;position: relative;}
+
+.adfront{
+	width: 100%;
+	height: 100%;
+	background: #000000;
+	display: none;
+}
+.adfront .content{
+	width: 50%;
+	height: 50%;
+	color: #FFF;
+	position: absolute;
+	background: #0000CC;
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	font-size: 30px;
+	line-height: 38px;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box; /* Firefox */
+	-webkit-box-sizing:border-box; /* Safari */	
+	padding: 50px;
+}			
+</style>
+
+<link rel="stylesheet" type="text/css" href="ckplayer/css/ckplayer.css">
+<script type="text/javascript" charset="utf-8" src="ckplayer/js/ckplayer.js"></script>
+<script type="text/javascript" charset="utf-8" src="ckplayer/flv.js/flv.js"></script>
+<script type="text/javascript" charset="utf-8" src="ckplayer/hls.js/hls.js"></script>
+<script type="text/javascript" charset="utf-8" src="ckplayer/mpegts.js/mpegts.js"></script>
+</head>
+<body marginwidth="0" marginheight="0">
+<div id="playerCnt" class="playerCnt"></div>
+        <script type="text/javascript">
+            var plug="normal";
+        var live=false;
+        var url=parent.MacPlayer.PlayUrl;
+        var urlhz=url.split(".").pop().toLowerCase();
+        if(urlhz="m3u8"){plug="hls.js";}else if(urlhz="flv"){plug="flv.js";}else if(urlhz="ts"){plug="mpegts.js";}else if(urlhz="mp4"){plug="";}else{plug="";}
+                var videoObject = {
+                                container:".playerCnt", //容器的ID或className
+                                autoplay:true, //是否自动播放
+                                rightBar:true,
+                                screenshot:true,
+                                smallWindows:true,
+                                playbackrateOpen:true,
+                                webFull:true,
+                                plug:plug,
+                                live:live,
+                                next:{
+                                        link:parent.MacPlayer.PlayLinkNext,
+                                        content:".video-next"
+                                },
+                                menu:[
+                                        {
+                                                title:"ckplayer",
+                                                link:"http://www.ckplayer.com"                
+                                        },
+                                        {
+                                                title:"version:X3",
+                                                underline:true
+                                        },
+                                        {
+                                                title:"关于视频",
+                                                click:"aboutShow"
+                                        }
+                                ],
+                                information:{
+                                        "视频加载：":"{loadTime}秒",
+                                        "视频时长：":"{duration}秒",
+                                        "视频尺寸：":"{videoWidth}x{videoHeight}",
+                                        "视频音量：":"{volume}%",
+                                        "视频FPS：":"{fps}",
+                                        "音频解码：":"{audioDecodedByteCount} Byte",
+                                        "视频解码：":"{videoDecodedByteCount} Byte"
+                                },
+				                ad:{//定义广告
+				                	front:{//定义贴片广告
+				                		closeTime:2,//播放贴片广告时3秒后显示可关闭广告
+				                		closeButtonClick:'closeFront',//点击关闭按钮触发事件
+				                		list:[//贴片广告列表
+				                		        {
+				                		            file: '/static/player/ckplayer/ad/play_b01.gif',//图片地址
+				                		            type: 'picture',//广告类别定义成picture
+				                		            link: 'https://ckplv2.c7ykf7m1.sbs/rtt/01bbp.html',//链接地址
+				                		            time: 2//广告时长
+				                		        }
+				                		]
+				                	}
+				                },
+                                video:url
+                        };
+                        var player=new ckplayer(videoObject)
+						function closeFront(){//用户点击关闭广告触发
+							player.closeFrontAd();//关闭广告
+		}
+        </script>
+</body>
+</html>

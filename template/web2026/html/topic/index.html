@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		{include file="public/include"}
+		<title>{:unicode_encode($maccms.site_name)} </title>
+		<meta name="keywords" content="{:unicode_encode($maccms.site_keywords)}" />
+		<meta name="description" content="{:unicode_encode($maccms.site_description)}">
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="stui-pannel">
+					<div class="stui-pannel__hd">
+
+						{include file="public/header"}
+
+						<div class="stui-pannel__bd clearfix">
+							<div class="stui-screen">
+								<li>
+									<h4><i class="iconfont icon-link"></i>新片优先</h4>
+								</li>
+
+								<div class="head clearfix">
+									<a href="javascript:;" class="open-screen pull-right">
+										<!--<font color="#fdf751">点击展开 <i class="iconfont icon-moreunfold"></i></font>-->
+										<font>收起  <i class="iconfont icon-less"></i></font>
+									</a>
+									<span class="text">已选择：最新</span>
+									<!--<span class="all">，共有“{:mac_data_count($obj.type_id,'all')}”部视频</span>-->
+								</div>
+
+								<div class="item" id="screenbox" style="Xdisplay: none;">
+									<!-- 筛选 -->
+									<ul class="clearfix">
+										<li>
+											<span>按类型：</span>
+										</li>
+										{maccms:type ids="200,300,400,500" by="sort" order="desc"}
+										<li><a href="{:mac_url_type($vo)}" class="text-muted">{:unicode_encode($vo.type_name)}</a></li>
+										{/maccms:type}
+									</ul>
+									<!-- end 筛选 -->
+								</div>
+							</div>
+
+							<ul class="stui-vodlist clearfix">
+								{maccms:vod num="600" by="id,time" order="desc,desc"}
+								<li class="topic-items">
+									<div class="stui-vodlist__box link_re">
+										<a class="stui-vodlist__thumb lazyload" href="{:mac_url_vod_play($vo)}" title="{:unicode_encode($vo.vod_name)}" data-original="{:mac_url_img($vo.vod_pic)}">
+											<span class="play hidden-xs"></span>
+											<!--<span class="pic-text text-right">{:date('Y-m-d', $vo.vod_time_add)}</span>-->
+                                            <span class="pic-text-top text-right">{:unicode_encode($vo.type.type_name)}</span>
+										</a>
+										<div class="stui-vodlist__detail">
+											<h4 class="title text-overflow"><a href="{:mac_url_vod_detail($vo)}" title="{:unicode_encode($vo.vod_name)}">{:unicode_encode($vo.vod_name)}</a></h4>
+											<!--<p class="text text-overflow text-muted hidden-xs">内详</p>-->
+										</div>
+									</div>
+								</li>
+								{/maccms:vod}
+							</ul>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const items = document.querySelectorAll('.topic-items');
+    const allItems = Array.from(items);
+    const shuffled = shuffleArray(allItems);
+    shuffled.forEach((item, index) => {
+        if (index >= 300) {
+            item.style.display = 'none';
+        }
+    });
+});
+function shuffleArray(array) {
+    const shuffleds = [...array];  
+    for (let i = shuffleds.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffleds[i], shuffleds[j]] = [shuffleds[j], shuffleds[i]];
+    }
+    return shuffleds;
+}
+</script>
+						</div>
+						<div class="stui-pannel__ft"></div>
+					</div>
+				</div>
+			</div>
+
+			<script type="text/javascript">
+				$(".open-screen").click(function () {
+					var display = $('#screenbox').css('display');
+					if (display == 'block') {
+						$("#screenbox").slideUp("slow");
+						$(this).html('展开 <i class="iconfont icon-moreunfold"></i>')
+					} else {
+						$("#screenbox").slideDown("slow");
+						$(this).html('收起 <i class="iconfont icon-less"></i>')
+					}
+				});
+			</script>
+			
+			
+            {include file="public/footer"}
+
+        </div>
+	</body>
+
+</html>

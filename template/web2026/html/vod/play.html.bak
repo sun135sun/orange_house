@@ -1,0 +1,247 @@
+{php}
+$currentId = $obj['vod_id'];
+
+$prev = model("Vod")
+    ->where("vod_id", "<", $currentId)
+    ->where("type_id", $obj['type_id']) 
+    ->order("vod_id desc")
+    ->find();
+    
+if(!empty($prev)){
+    $prev = $prev->toArray();
+}
+
+
+$next = model("Vod")
+    ->where("vod_id", ">", $currentId)
+    ->where("type_id", $obj['type_id'])
+    ->order("vod_id asc")
+    ->find();
+    
+if(!empty($next)){
+    $next = $next->toArray();
+}
+
+{/php}
+
+<!DOCTYPE html>
+<html>
+
+    <head>
+	    {include file="public/include"}
+		
+        <title>{:unicode_encode($obj.vod_name)} {:unicode_encode($maccms.site_name)}</title>
+        <meta name="keywords" content="{:unicode_encode($obj.vod_name)},{:unicode_encode($maccms.site_keywords)}" />
+        <meta name="description" content="{:unicode_encode($obj.vod_name)},{:unicode_encode($maccms.site_description)}" />
+        <script type="text/javascript" src="{$maccms.path_tpl}asset/js/history.js"></script>
+        <script type="text/javascript">var vod_name = '{:unicode_encode($obj.vod_name)}', vod_url = window.location.href, vod_part = '第1集';</script>
+        <style>
+            .stui-player__side .item .head h3 a{
+                color: #757575;
+            }
+            
+            .stui-play__list li a{
+                background-color: #fff;
+                color: #333;
+            }
+            @media (max-width: 767px) {
+                .stui-play__list li {
+                    width: 25%;
+                }
+                .stui-vodlist li.like {
+                    width: 50%;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+
+
+
+        <div class="container">
+            <div class="row">
+                <div class="stui-pannel">
+                    <div class="stui-pannel__hd">
+
+                        {include file="public/header"}
+
+                        <div class="stui-pannel clearfix">
+                            <div class="stui-pannel-box">
+                                <div class="stui-pannel__bd">
+                                    <div class="stui-player clearfix">
+
+<div class="breadcrumbs" style="color:#CCCCCC;">
+{:unicode_encode('您的位置')}：<a href="/" style="color:#CCCCCC;">{:unicode_encode('首页')}</a>
+<em class="sep">></em><a href="{:mac_url_type($obj.type)}" style="color:#CCCCCC;">{$obj.type.type_name|unicode_encode}</a>
+<em class="sep">></em><span>{$obj.vod_name|unicode_encode}</span>
+</div>	
+<br />
+
+	                                  <div class="stui-play__list" style="min-height:50px;">
+                                            {maccms:link type="font" order="asc" by="sort" num="9999"}
+                                                {if( $vo.link_sort >= 6001 && $vo.link_sort <= 6999)}
+                                                <li class="active" style="width:auto;">
+                                                    <a target="_blank"  rel="{$vo.link_rel}" href="{:unicode_encode($vo.link_url)}">{:unicode_encode($vo.link_name)}</a>
+                                                </li>
+                                                {/if}
+                                            {/maccms:link}	
+                                        </div>
+                 
+                                        <div class="stui-player__left">	
+          
+                                            <div class="stui-player__video embed-responsive embed-responsive-16by9 clearfix">
+                                                {$player_data}{$player_js}
+                                            </div>
+
+                                            <div class="stui-player__detail">
+                                                <div class="more">
+                                                        {if condition="$prev"}
+                                                        <a href="{:mac_url_vod_play($prev)}">
+                                                            <i class="iconfont icon-back"></i> 上一片
+                                                        </a>
+                                                        {/if}
+                                                        
+                                                        {if condition="$next"}
+                                                        <a href="{:mac_url_vod_play($next)}">
+                                                            下一片 <i class="iconfont icon-more"></i>
+                                                        </a>
+                                                        {/if}
+                                                    <a class="menu-switch" href="javascript:;"><span>关闭菜单</span> <i class="iconfont icon-all"></i></a>
+                                                </div>
+                                                <h1 class="title">{:unicode_encode($obj.vod_name)}</h1>
+                                                <div class="data">{:date('Y-m-d', $obj.vod_time_add)} / {:unicode_encode($obj.type.type_name)} / 内详 / {$obj.vod_score}分 / {$obj.vod_hits}次播放&nbsp;&nbsp;<a href="javascript:;" class="open-desc"></a></div>
+                                                <div style="margin-top:5px;">
+                                                        {if($obj.vod_tag)}
+                                                    <h4 style="color:white;">标签: </h4>
+                                                
+                                                    {volist name=":explode(',', $obj.vod_tag)" id="tag"}
+                                                    <a href="{:mac_url('vod/search', ['wd' => $tag])}" style="color:white;padding:2px;margin-right:2px;margin-top:3px;border:white 1px solid;border-radius:3px;display:inline-block">{$tag}</a>
+                                                    {/volist}
+                                                    {/if}
+                                                </div>
+                                                <div class="data-more" style="display: none;">
+                                                    <p><span>主演：</span>{:unicode_encode($obj.vod_actor)}</p>
+                                                    <p><span>导演：</span>{:unicode_encode($obj.vod_director)}</p>
+                                                    <p>
+                                                        <span>类型：</span>{:unicode_encode($obj.type.type_name)}&nbsp;&nbsp;
+                                                        <span>地区：</span>&nbsp;&nbsp;
+                                                        <span>年份：</span>{$obj.vod_year}&nbsp;&nbsp;
+                                                    </p>
+                                                    <p>简介：{:unicode_encode($obj.vod_name)}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="stui-player__side" style="display: block; height: 582.758px;">
+                                            <ul class="tab clearfix">
+                                                <li class="active"><a href="javascript:;">播放选集</a></li>
+                                                <li><a href="javascript:;">相关推荐</a></li>
+                                            </ul>
+
+                                            <div class="tab-content" id="play-box">
+                                                <div class="item active" style="height: 531px; overflow: auto;">
+                                                    <div class="head clearfix">
+                                                        <a class="play-switch pull-right" href="javascript:;">如不能播放请切换线路 <i class="iconfont icon-moreunfold"></i></a>
+                                                        <ul class="tab-top play-tab clearfix">
+                                                            {php}$playlist_index=1;{/php}
+                                                            {maccms:foreach name="obj.vod_play_list" id="vo"}
+                                                            <li {if ($playlist_index==1)}class="active" {/if}><a href="javascript:;" data-target="#playlist-{$vo.sid}">{$vo.player_info.show}</a></li>
+                                                            {php}$playlist_index++;{/php}
+                                                            {/maccms:foreach}
+                                                        </ul>
+                                                        <h3>{$vo.player_info.show}</h3>
+                                                    </div>
+                                                    <div class="play-content">
+                                                        {php}$playlist_index=1;{/php}
+                                                        {maccms:foreach name="obj.vod_play_list" id="vo"}
+                                                        <div class="play-item cont {if ($playlist_index==1)}active{/if}" id="playlist-{$vo.sid}">
+                                                            <ul class="stui-play__list clearfix">
+                                                                {maccms:foreach name="vo.urls" id="vo2"}
+                                                                <li {if ($maccms.aid==15 && $vo.sid==$param.sid && $vo2.nid==$param.nid)}class="active" {/if}>
+                                                                    <!--<a href="{:mac_url_vod_play($obj,['sid'=>$vo.sid,'nid'=>$vo2.nid])}">{$vo2.name}</a>-->
+                                                                    <a href="{:mac_url_vod_play($obj,['sid'=>$vo.sid,'nid'=>$vo2.nid])}">在线播放</a>
+                                      
+                                                                </li>
+                                                                  {maccms:link type="font" order="asc" by="sort" num="9999"}
+                                                                    {if( $vo.link_sort >= 6001 && $vo.link_sort <= 6999)}
+                                                                      <li class="active">
+                                                                        <a  target="_blank"  rel="{$vo.link_rel}" href="{:unicode_encode($vo.link_url)}">{:unicode_encode($vo.link_name)}</a>
+                                                                        </li>
+                                                                    {/if}
+                                                                    {/maccms:link}
+                                                                {/maccms:foreach}
+                                                            </ul>
+                                                        </div>
+                                                        {php}$playlist_index++;{/php}
+                                                        {/maccms:foreach}
+                                                    </div>
+                                                </div>
+                                                <div class="item" style="height: 531px; overflow: auto;">
+                                                    <ul class="stui-vodlist clearfix">
+                                                        {maccms:vod type="current" by="time" order="desc" num="12"}
+                                                        <li class="like">
+                                                            <div class="stui-vodlist__box">
+                                                                <a class="stui-vodlist__thumb lazyload" href="{:mac_url_vod_play($vo)}" title="{:unicode_encode($vo.vod_name)}" data-original="{:mac_url_img($vo.vod_pic)}" style="background-image: url(&quot;{:mac_url_img($vo.vod_pic)}&quot;);">
+                                                                    <span class="play hidden-xs"></span>
+                                                                    <span class="pic-text text-center">{:unicode_encode($vo.vod_name)}</span>
+                                                                    <span class="pic-text-top text-right">{:unicode_encode($vo.type.type_name)}</span>
+                                                                </a>
+                                                            </div>
+                                                        </li>
+                                                        {/maccms:vod}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+
+
+                                    <div class="stui-vodlist__head">
+                                        <h3><i class="iconfont icon-hot"></i> 猜你喜欢</h3>
+                                    </div>
+                                    <ul class="stui-vodlist clearfix">
+                                        {maccms:vod by="rnd" order="desc" num="8"}
+                                        {include file="module/vodlist"}
+                                        {/maccms:vod}
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    {include file="public/footer"}
+                </div>
+            </div>
+
+            <!--<div class="play-bg"></div>-->
+            <script type="text/javascript">
+                var PlayLeft = $(".stui-player__left");
+                var PlaySide = $(".stui-player__side")
+                var LeftHeight = PlayLeft.outerHeight();
+                var BoxHeight = parseInt(LeftHeight) - 51;
+                var Position = $(".stui-play__list li.active").position().top;
+                var PositionBox = parseInt(Position) - 100;
+                if (!stui.browser.useragent.mobile) {
+                    PlaySide.css("height", LeftHeight);
+                    $("#play-box").find(".item").css({"height": BoxHeight, "overflow": "auto"}).scrollTop(PositionBox);
+                }
+            </script>
+            <style type="text/css">
+                .MacPlayer #playleft,
+                .MacPlayer #playleft .dplayer-video-wrap {
+                    position: inherit !important;
+                    overflow: initial !important;
+                }
+            </style>
+            <script type="text/javascript">$(".MacPlayer").addClass("embed-responsive").css({"padding-bottom": "56.25%", "z-index": "99"}); </script>
+
+            <span class="mac_ulog_set hide" alt="浏览记录" data-type="1" data-mid="1" data-id="{$obj.vod_id}" data-sid="0" data-nid="0"></span>
+            <span class="mac_history_set hide" alt="历史记录" data-name="[{:unicode_encode($obj.type.type_name)}]{:unicode_encode($obj.vod_name)}" data-pic="{:mac_url_img($obj.vod_pic)}"></span>
+    </body>
+
+</html>

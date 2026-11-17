@@ -1,0 +1,15 @@
+{if($wn_link_upgrade)}
+<div class="wn_block_app">
+    <h4 class="wn_block_title">{:lang('APP推荐')}</h4>
+    <div class="wn_block_app_wrapper">
+        {maccms:link type="pic" order="asc" by="sort" num="9999"}
+            {if( $vo.link_sort >= 3001 && $vo.link_sort <= 4000)}
+                <a class="wn_block_app_item" href="{:unicode_encode($vo.link_url)}" target="_blank" rel="{$vo.link_rel}">
+                    <img class="wn_block_app_item_image" src="{:mac_url_img($vo.link_logo)}">
+                    <div class="wn_block_app_item_name" style="color:{$vo.link_name_color}">{:unicode_encode($vo.link_name)}</div>
+                </a>
+            {/if}
+        {/maccms:link}
+    </div>
+</div>
+{/if}

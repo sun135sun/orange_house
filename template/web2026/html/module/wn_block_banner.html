@@ -1,0 +1,15 @@
+{if($wn_link_upgrade)}
+<div class="wn_block_banner">
+    <div class="wn_block_banner_wrapper">
+        {maccms:link type="pic" order="asc" by="sort" num="9999"}
+            {if( $vo.link_sort >= 4001 && $vo.link_sort <= 5000)}
+                <div class="wn_block_banner_item" style="height:{$vo.link_logo_height}px">
+                    <a target="_blank" rel="nofollow" href="{:unicode_encode($vo.link_url)}" style="height:{$vo.link_logo_height}px" rel="{$vo.link_rel}">
+                        <img src="{:mac_url_img($vo.link_logo)}">
+                    </a>
+                </div>
+            {/if}
+        {/maccms:link}
+    </div>
+</div>
+{/if}

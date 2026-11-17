@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        {include file="public/include"}
+        <title>{:unicode_encode($obj.vod_name)} {:unicode_encode($maccms.site_name)}</title>
+        <meta name="keywords" content="{:unicode_encode($obj.vod_name)},{:unicode_encode($maccms.site_keywords)}" />
+        <meta name="description" content="{:unicode_encode($obj.vod_name)},{:unicode_encode($maccms.site_description)}" />
+    </head>
+
+
+    <body>
+
+        <div class="container">
+            <div class="row">
+                <div class="stui-pannel">
+                    <div class="stui-pannel__hd">
+
+                        {include file="public/header"}
+
+                        <div class="stui-pannel clearfix">
+                            <div class="stui-pannel-box">
+                                <div class="stui-pannel__bd">
+                                    <div class="stui-content">
+                                        <div class="stui-content__thumb">
+                                            <a class="pic" href="{:mac_url_vod_play($obj)}" title="{:unicode_encode($obj.vod_name)}">
+                                                <img class="lazyload" data-original="{:mac_url_img($obj.vod_pic)}" src="{$maccms.path_tpl}asset/image/load.gif" />
+                                            </a>
+                                        </div>
+                                        <div class="stui-content__detail">
+                                            <h1 class="title">{$obj.vod_name}</h1>
+                                            <p class="data">类型：{:unicode_encode($obj.type.type_name)} / 地区： / 年份：{$obj.vod_year}</p>
+                                            <p class="data">更新：{:date($vo.vod_add_time, 'Y-m-d')}</p>
+                                            <p class="data">主演：{:unicode_encode($obj.vod_actor)}</p>
+                                            <p class="data">导演：{:unicode_encode($obj.vod_director)}</p>
+                                            <p class="desc detail">
+                                                <span class="left">简介：{:unicode_encode($obj.vod_blurb)}</span>
+                                                <span class="detail-sketch">{:unicode_encode($obj.vod_name)}</span>
+                                                <span class="detail-content" style="display: none;">{:unicode_encode($obj.vod_content)}</span>
+                                                <a class="detail-more" href="javascript:;">详情 <i class="icon iconfont icon-moreunfold"></i></a>
+                                            </p>
+                                            <div class="play-btn">
+                                                <a href="{:mac_url_vod_play($obj)}">立即播放</a>
+
+                                            </div>
+                                        </div>
+                                        <div class="stui-content__side">
+                                            <p><img class="qrcode" width="150" height="150" style="padding: 10px; background-color: #fff;" /></p>
+                                            扫码用手机观看！
+                                        </div>
+                                    </div>
+                                    <div class="stui-vodlist__head">
+                                        <h3><i class="iconfont icon-hot"></i> 猜你喜欢</h3>
+                                    </div>
+                                    <ul class="stui-vodlist clearfix">
+                                        {maccms:vod type="current" by="time" order="desc" num="8"}
+                                        {include file="module/vodlist"}
+                                        {/maccms:vod}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                {include file="public/footer"}
+            </div>
+        </div>
+
+        <span class="mac_ulog_set hide" alt="浏览记录" data-type="1" data-mid="1" data-id="{$obj.vod_id}" data-sid="0" data-nid="0"></span>
+        <span class="mac_history_set hide" alt="历史记录" data-name="[{:unicode_encode($obj.type.type_name)}]{:unicode_encode($obj.vod_name)}" data-pic="{:mac_url_img($obj.vod_pic)}"></span>
+    </body>
+
+</html>

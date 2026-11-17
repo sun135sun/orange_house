@@ -1,0 +1,236 @@
+{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="/static/css/custom_common.css">
+<style>
+    .my-blockquote{
+        display:flex;
+        margin-bottom: 20px;
+    }
+    .my-blockquote blockquote{
+        border: 5px solid #009688;
+        flex:1;
+        margin-right: 10px;
+        padding: 0;
+        background: #f7f7f7;
+    }
+    .my-blockquote table{
+        margin:0;
+    }
+    .my-blockquote blockquote h4{
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+    .my-blockquote blockquote li{
+        list-style-type: square;
+        list-style-position: inside;
+    }
+    .me-3{
+        margin-right:30px;
+    }
+    .text-pink{
+        color:#ff1677;
+    }
+    .fw-bold{
+        font-weight: 600;
+    }
+</style>
+
+
+
+<div class="page-container p10">
+
+    <!-- 說明 -->
+    <div class="my-blockquote">
+        <blockquote>
+            <table class="layui-table">
+                <tbody>
+                    <tr><td colspan="2" class="text-pink fw-bold">文字位置</td></tr>		
+                    <tr><td width="100">類型</td><td>文字連結</td></tr>
+                    <tr><td width="100">排序</td><td>數字愈小，排位愈靠前面</td></tr>
+                    <tr><td width="100">站長推薦</td><td>排序 0-1000</td></tr>
+                    <tr><td width="100">上方友鏈</td><td>排序 1001-2000</td></tr>
+                    <tr><td width="100">下方友連</td><td>排序 2001-3000</td></tr>
+                    <tr><td width="100">暗链</td><td>排序 9999</td></tr>
+                    <tr><td width="100">视频区链接</td><td>排序 6001-6999</td></tr>
+                </tbody>
+            </table>
+        </blockquote>
+
+        <blockquote>
+            <table class="layui-table">
+                <tbody>
+                    <tr><td colspan="2" class="text-pink fw-bold">圖片位置</td></tr>
+                    <tr><td width="100">類型</td><td>圖片連結</td></tr>
+                    <tr><td width="100">排序</td><td>數字愈小，排位愈靠前面</td></tr>	
+                    <tr><td width="100">APP圖標</td><td>排序 3001-4000</td></tr>
+                    <tr><td width="100">橫幅 Banner</td><td>排序 4001-5000</td></tr>
+                </tbody>
+            </table>
+        </blockquote>
+        <blockquote>
+            <table class="layui-table">
+                <tbody>
+                    <tr><td colspan="2" class="text-pink fw-bold">隨機位置</td></tr>	
+                    <tr><td width="100">類型</td><td>圖片連結</td></tr>	
+                    <tr><td width="100">列表輪播</td><td>排序 7001-8000</td></tr>
+                    <!--<tr><td width="100">橫幅輪播</td><td>排序 8001-9000</td></tr>-->
+                </tbody>
+            </table>
+        </blockquote>
+
+    </div>
+    
+
+    <div class="my-toolbar-box">
+
+
+        <div class="layui-tab-item layui-show">
+
+            <div class="d-flex">
+                <!-- Batch -->
+                <div class="layui-btn-group me-3">
+                    <a data-href="{:url('info')}" class="layui-btn layui-btn-primary j-iframe"><i class="layui-icon">&#xe654;</i>{:lang('add')}</a>
+                    <a data-href="{:url('batch')}" class="layui-btn layui-btn-primary j-page-btns confirm"><i class="layui-icon">&#xe642;</i>{:lang('edit')}</a>
+                    <a data-href="{:url('del')}" class="layui-btn layui-btn-primary j-page-btns confirm"><i class="layui-icon">&#xe640;</i>{:lang('del')}</a>
+                </div>
+
+                <!-- 篩選 -->
+                <div class=" mb10">
+                    <form class="layui-form " method="post" action="{:url('index')}">
+                        <div class="layui-input-inline w150">
+                            <select name="link_type">
+                                <option value="">所有类型</option>
+                                <option value="0" {if condition="$param['link_type'] == '0'"}selected {/if}>文字连结</option>
+                                <option value="1" {if condition="$param['link_type'] == '1'"}selected {/if}>图片连结</option>
+                            </select>
+                        </div>
+                        
+                        <div class="layui-input-inline w150">
+                            <select name="position">
+                                <option value="">所有位置</option>
+                                <option value="app" {if condition="$param['position'] == 'app'"}selected {/if}>图标</option>
+                                <option value="webmaster_recommend" {if condition="$param['position'] == 'webmaster_recommend'"}selected {/if}>站长推荐</option>
+                                <option value="link_recommend" {if condition="$param['position'] == 'link_recommend'"}selected {/if}>友链推荐</option>
+                                <option value="banner" {if condition="$param['position'] == 'banner'"}selected {/if}>Banner</option>
+                                <option value="bottom_link" {if condition="$param['position'] == 'bottom_link'"}selected {/if}>下方友链</option>
+                                <!--<option value="floating" {if condition="$param['position'] == 'floating'"}selected {/if}>上下左右飘</option>-->
+                                <option value="random_banner_ads" {if condition="$param['position'] == 'random_banner_ads'"}selected {/if}>影片列表輪播</option>
+                                <option value="random_vodlist_ads" {if condition="$param['position'] == 'random_vodlist_ads'"}selected {/if}>橫幅輪播</option>
+                                <option value="random_jump_link" {if condition="$param['position'] == 'random_jump_link'"}selected {/if}>暗链</option>
+                                <option value="player_text_link" {if condition="$param['position'] == 'player_text_link'"}selected {/if}>视频区链接</option>
+                            </select>
+                        </div>
+
+                        <div class="layui-input-inline">
+                            <input type="text" autocomplete="off" placeholder="{:lang('wd')}" class="layui-input" name="wd" value="{$param['wd']}">
+                        </div>
+                        <button class="layui-btn mgl-20 j-search" >{:lang('btn_search')}</button>
+                    </form>
+                </div>
+
+
+            </div>
+
+
+
+
+            <!-- 文字 Form -->
+            <form class="layui-form " method="post" id="pageListForm">
+                <table class="layui-table" lay-size="sm">
+                <thead>
+                    <tr>
+                        <th width="25"><input type="checkbox" lay-skin="primary" lay-filter="allChoose"></th>
+                        <th width="50">{:lang('id')}</th>
+                        <th width="100">{:lang('sort')}</th>
+                        <th width="50">点击</th>
+                        <th width="50">权重</th>
+                        <th width="100">Rel</th>
+                        <th width="100">{:lang('genre')}</th>
+                        <th width="150">位置</th>
+                        <th>{:lang('name')}</th>
+                        <th>{:lang('url')}</th>
+                        <th>图片</th>
+                        <th width="50">图片高度</th>
+                        <th>文字顏色</th>
+                        <th>文字背景色</th>
+                        <th width="130">{:lang('opt')}</th>
+                    </tr>
+                    </thead>
+        
+                    {volist name="list" id="vo"}
+                    <tr>
+                        <td><input type="checkbox" name="ids[]" value="{$vo.link_id}" class="layui-checkbox checkbox-ids" lay-skin="primary"></td>
+                        <td>{$vo.link_id}</td>
+                        <td><input type="input" name="link_sort_{$vo.link_id}" value="{$vo.link_sort}" class="layui-input"></td>
+                        <td><input type="input" name="link_max_clicks_{$vo.link_id}" value="{$vo.link_max_clicks}" class="layui-input"></td>
+                        <td><input type="input" name="link_weight_{$vo.link_id}" value="{$vo.link_weight}" class="layui-input"></td>
+                        <td><input type="input" name="link_rel_{$vo.link_id}" value="{$vo.link_rel}" class="layui-input"></td>
+                        <td>
+                            <select name="link_type_{$vo.link_id}">
+                                <option value="0" {if condition="$vo['link_type'] eq 0"}selected {/if}>{:lang('admin/link/text_link')}</option>
+                                <option value="1" {if condition="$vo['link_type'] eq 1"}selected {/if}>{:lang('admin/link/pic_link')}</option>
+                            </select>
+                        </td>
+                        <td>
+                            {if( $vo.link_sort >= 0 && $vo.link_sort <= 1000  && $vo.link_type == '0')}<span>站長推薦</span>{/if}
+                            {if( $vo.link_sort >= 1001 && $vo.link_sort <= 2000  && $vo.link_type == '0')}<span>上方友連</span>{/if}
+                            {if( $vo.link_sort >= 2001  && $vo.link_sort <= 3000  && $vo.link_type == '0')}<span>下方友链</span>{/if}
+                            {if( $vo.link_sort >= 3001 && $vo.link_sort <= 4000  && $vo.link_type == '1')}<span>圖標</span>{/if}
+                            {if( $vo.link_sort >= 4001 && $vo.link_sort <= 5000  && $vo.link_type == '1')}<span>Banner</span>{/if}
+                            <!--{if( $vo.link_sort >= 9001 && $vo.link_sort <= 9004  && $vo.link_type == '1')}<span>上下左右浮窗</span>{/if}-->
+                            {if( $vo.link_sort >= 7001 && $vo.link_sort <= 8000  && $vo.link_type == '1')}<span>影片列表輪播</span>{/if}
+                            {if( $vo.link_sort >= 8001 && $vo.link_sort <= 9000  && $vo.link_type == '1')}<span>橫幅輪播</span>{/if}
+                            {if( $vo.link_sort >= 9999 && $vo.link_sort <= 9999  && $vo.link_type == '1')}<span>暗链</span>{/if}
+                            {if( $vo.link_sort >= 6001 && $vo.link_sort <= 6999  && $vo.link_type == '1')}<span>视频区链接</span>{/if}
+                        </td>
+                        <td><input type="input" name="link_name_{$vo.link_id}" value="{$vo.link_name}" class="layui-input"></td>
+                        <td><input type="input" name="link_url_{$vo.link_id}" value="{$vo.link_url}" class="layui-input"></td>
+                        <td><input type="input" name="link_logo_{$vo.link_id}" value="{$vo.link_logo}" class="layui-input"></td>
+                        <td><input type="input" name="link_logo_height_{$vo.link_id}" value="{$vo.link_logo_height}" class="layui-input"></td>
+                        <td><input type="input" name="link_name_color_{$vo.link_id}" value="{$vo.link_name_color}" class="layui-input" style="border-width:4px;border-color:{$vo.link_name_color}"></td>
+                        <td><input type="input" name="link_background_color_{$vo.link_id}" value="{$vo.link_background_color}" class="layui-input" style="border-width:4px;border-color:{$vo.link_background_color};"></td>
+                        <td>
+                            <a class="layui-badge-rim j-ajax" data-href="{:url('index/check_back_link')}?url={$vo['link_url']}" refresh="no" href="javascript:;" title="{:lang('detect')}">{:lang('detect')}</a>
+                            <a class="layui-badge-rim j-iframe" data-href="{:url('info?id='.$vo['link_id'])}" href="javascript:;" title="{:lang('edit')}">{:lang('edit')}</a>
+                            <a class="layui-badge-rim j-tr-del" data-href="{:url('del?ids='.$vo['link_id'])}" href="javascript:;" title="{:lang('del')}">{:lang('del')}</a>
+                        </td>
+                    </tr>
+                    {/volist}
+                    </tbody>
+                </table>
+                <div id="pages" class="center"></div>
+        
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+{include file="../../../application/admin/view/public/foot" /}
+
+
+<script type="text/javascript">
+    var curUrl="{:url('link/index',$param)}";
+    layui.use(['laypage', 'layer'], function() {
+        var laypage = layui.laypage
+            , layer = layui.layer;
+
+        laypage.render({
+            elem: 'pages'
+            ,count: {$total}
+            ,limit: {$limit}
+            ,curr: {$page}
+            ,layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+            ,jump: function(obj,first){
+                if(!first){
+                    location.href = curUrl.replace('%7Bpage%7D',obj.curr).replace('%7Blimit%7D',obj.limit);
+                }
+            }
+        });
+    });
+</script>
+
+
+</body>
+</html>

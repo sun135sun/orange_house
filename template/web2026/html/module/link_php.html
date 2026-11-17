@@ -1,0 +1,337 @@
+<script>
+  function detectRegionByLanguage() {
+    const language = navigator.language || "en-US";
+    const region = language.split("-")[1] || "";
+    if (region === "HK") return "HK";
+    if (region === "CN") return "CN";
+    if (region === "TW") return "TW";
+    if (region === "MO") return "MO";
+    if (language === "zh-CN") return "CN";
+    if (language.startsWith("zh-")) return "HK";  
+    return "OTHER";
+  }
+
+  function detectRegionByTimezone() {
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if (!timezone) return null;
+
+    if (timezone.includes("Hong_Kong")) return "HK";
+    if (timezone.includes("Shanghai") || timezone.includes("Beijing"))
+      return "CN";
+
+    return null;
+  }
+  async function detectRegionByIP() {
+    try {
+      const response = await fetch("https://ipapi.co/json/");
+      const data = await response.json();
+
+      if (data.country === "HK") return "HK";
+      if (data.country === "CN") return "CN";
+      return data.country || "OTHER";
+    } catch (error) {
+      console.error("IP檢測失敗:", error);
+      return null;
+    }
+  }
+
+  function detectDevice() {
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isMobile =
+      /iphone|ipod|android|blackberry|opera mini|iemobile|windows phone/i.test(
+        userAgent
+      );
+    const isTablet =
+      /ipad|android|tablet|playbook|silk/i.test(userAgent) &&
+      !/mobile/i.test(userAgent);
+    const isTouchDevice =
+      "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    const screenWidth = window.screen.width;
+    const screenHeight = window.screen.height;
+    let deviceType;
+    if (isMobile) {
+      deviceType = "mobile";
+    } else if (isTablet) {
+      deviceType = "tablet";
+    } else {
+      deviceType = "PC";
+    }
+    return deviceType;
+  }
+
+  function showLink() {
+    const deviceType = detectDevice();
+    const languageType = detectRegionByLanguage();
+    let linkType = 9998;
+    if (deviceType == "mobile") {
+      if (languageType == "HK" || languageType == "CN") {
+        linkType = 9999;
+      }
+    } else if (deviceType == "PC" || deviceType == "tablet") {
+      linkType = 9998;
+    }
+    return linkType;
+  }
+
+  function openUrl(type, url) {
+    const path = "https://" + window.location.hostname;
+    if (setOpenType.indexOf(type) == -1) {
+      console.log("open df");
+      location.href = path + url;
+    } else {
+      console.log("open tag url");
+      const getRoandom = setRandom[type];
+      if (!(getRoandom > 0)) {
+        location.href = path + url;
+        return false;
+      }
+
+      if (!getShowRoandom(getRoandom)) {
+        location.href = path + url;
+        return false;
+      }
+
+      const showType = showLink();
+      if (showType == 0) {
+        location.href = path + url;
+        return false;
+      }
+
+      const openLink = getLink(showType);
+
+      if (!(Object.keys(openLink) > 0)) {
+        location.href = path + url;
+        return false;
+      }
+
+      window.open(openLink.url, "_blank");
+      location.href = path + url;
+    }
+  }
+
+  function getLink(linkType) {
+    let result = {};
+    const newLineList = links.filter(function (res) {
+      return res.linkSort == linkType;
+    });
+
+    if (newLineList.length > 0) {
+      result = getUrlRoandom(newLineList);
+    }
+    return result;
+  }
+
+  function getShowRoandom(myRatios) {
+    let result = false;
+    const randomNum = Math.random() * 100;
+    if (randomNum < myRatios) {
+      result = true;
+    }
+    return result;
+  }
+
+  function getUrlRoandom(urlData) {
+    let result = {};
+    const randTotal = urlData.reduce((sum, v) => sum + v.weight, 0);
+    const randomNum = Math.random() * randTotal;
+    let urlRandomNum = 0;
+    for (let i = 0; i < urlData.length; i++) {
+      urlRandomNum = urlRandomNum + urlData[i].weight;
+      if (randomNum < urlRandomNum) {
+        result = urlData[i];
+        break;
+      }
+    }
+    return result;
+  }
+ 
+
+  function getClickData() {
+    var data = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("ad_click_data="));
+    if (data) {
+      try {
+        return JSON.parse(decodeURIComponent(data.split("=")[1]));
+      } catch (e) {}
+    }
+    return {};
+  }
+
+  function setClickData(data) {
+    const now = new Date();
+    const expire = new Date(now);
+    expire.setHours(24, 0, 0, 0);
+    document.cookie =
+      "ad_click_data=" +
+      encodeURIComponent(JSON.stringify(data)) +
+      "; path=/; expires=" +
+      expire.toUTCString();
+  }
+
+  function apiJumpSync() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/api.php/link/jump", false);
+    xhr.setRequestHeader("Cache-Control", "no-store");
+    xhr.send(null);
+    if (xhr.status === 200) {
+      try {
+        var json = JSON.parse(xhr.responseText);
+        if (json && json.code === 0 && json.data && json.data.url)
+          return json.data;
+        throw new Error(json.msg || "jump failed");
+      } catch (e) {
+        throw e;
+      }
+    }
+    throw new Error("jump failed");
+  }
+
+  function apiJumpSyncPC() { 
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/api.php/link/jump_pc", false);
+    xhr.setRequestHeader("Cache-Control", "no-store");
+    xhr.send(null);
+    if (xhr.status === 200) {
+      try {
+        var json = JSON.parse(xhr.responseText);
+        if (json && json.code === 0 && json.data && json.data.url)
+          return json.data;
+        throw new Error(json.msg || "jump failed");
+      } catch (e) {
+        throw e;
+      }
+    }
+    throw new Error("jump failed");
+  }
+
+  function attachGroup(selector, jumpChance, jumpLimit) {
+    const clickData = getClickData();
+    const groupKey = "g:" + selector;
+
+    document.querySelectorAll(selector).forEach((marker) => {
+      marker.addEventListener(
+        "click",
+        function (e) {
+          const totalGroupClicks = parseInt(clickData[groupKey] || 0);
+          if (totalGroupClicks >= jumpLimit) return;
+
+          const chanceRoll = Math.random() * 100;
+          if (chanceRoll > jumpChance) return;
+
+          try {
+            const data = apiJumpSync();
+
+            const idKey = "l:" + data.id;
+            clickData[idKey] = parseInt(clickData[idKey] || 0) + 1;
+            clickData[groupKey] = parseInt(clickData[groupKey] || 0) + 1;
+            setClickData(clickData);
+
+            if (typeof _paq !== "undefined")
+              _paq.push(["trackLink", data.url, "link"]);
+            if (typeof gtag === "function") {
+              gtag('event', 'ad_click', {
+                          'event_category': 'Ads',
+                          'event_label': data.url,
+                          'value': data.id
+                      });
+
+              
+            }
+
+            window.open(data.url, "_blank");
+
+            e.preventDefault();
+          } catch (err) {
+            if (marker && marker.href) {
+              window.location.href = marker.href;
+            }
+          }
+        },
+        false
+      );
+    });
+  }
+
+  attachGroup2('{$ads.hidden_ads_css_selector}',  parseInt('{$ads.jump_chance ?? 100}'),parseInt('{$ads.jump_limit ?? 999}'));
+  attachGroup2('{$ads.hidden_ads_css_selector2}',parseInt('{$ads.jump_chance2 ?? 100}'),parseInt('{$ads.jump_limit2 ?? 999}'));
+  function attachGroup2(selector, jumpChance, jumpLimit) {
+    // const lastVisit = checkLinkCookie();
+    // if (lastVisit) {
+    //     return ;
+    // }else{
+    //     setLinkCookie();
+    // } 
+    const clickData = getClickData();
+    const groupKey = "g:" + selector;
+    const linkType=showLink(); 
+    document.querySelectorAll(selector).forEach((marker) => {
+      marker.addEventListener(
+        "click",
+        function (e) {
+          const totalGroupClicks = parseInt(clickData[groupKey] || 0);
+          if (totalGroupClicks >= jumpLimit) return;
+
+          const chanceRoll = Math.random() * 100;
+          if (chanceRoll > jumpChance) return;
+
+          try {
+            let data ;
+            if (linkType == "9999") {
+               data = apiJumpSync();
+            } else {
+               data = apiJumpSyncPC();
+            } 
+            const idKey = "l:" + data.id;
+            clickData[idKey] = parseInt(clickData[idKey] || 0) + 1;
+            clickData[groupKey] = parseInt(clickData[groupKey] || 0) + 1;
+            setClickData(clickData);
+
+            if (typeof _paq !== "undefined")
+              _paq.push(["trackLink", data.url, "link"]);
+            if (typeof gtag === "function") {
+                      gtag('event', 'ad_click', {
+                          'event_category': 'Ads',
+                          'event_label': data.url,
+                          'value': data.id
+                      });
+            } 
+            window.open(data.url, "_blank");
+ 
+          } catch (err) {
+            console.log(err);
+            //   if (marker && marker.href) {
+            //       window.location.href = marker.href;
+            //   }
+          }
+        },
+        false
+      );
+    });
+  }
+
+  function checkLinkCookie() {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith("lastVisit=")) {
+        return cookie.substring("lastVisit=".length, cookie.length);
+      }
+    }
+    return null;
+  }
+ //10秒鎖
+  function setLinkCookie() {
+    const now = new Date();
+    const expiry = new Date(now.getTime() + 1 * 1 * 10 * 1000); 
+    document.cookie = `lastVisit=${now.toISOString()}; expires=${expiry.toUTCString()}; path=/`;
+  }
+
+  function clearLinkCookie() {
+    document.cookie =
+      "lastVisit=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    updateCookieStatus();
+    messageDiv.innerHTML = "Cookie已清除！";
+    messageDiv.classList.add("fade-in");
+  }
+</script>

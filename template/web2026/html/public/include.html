@@ -1,0 +1,300 @@
+{php}
+$wn_debug = false;
+$version = $wn_debug ? time() : parse_ini_file(ltrim(MAC_PATH_TEMPLATE .'info.ini', '/'))['version'];
+$wn_link_upgrade = true; $wn_floating = true; $wn_ga_status = false;
+require MAC_ROOT_TEMPLATE . 'php/function.php';
+{/php}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10" />
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta name="referrer" content="always">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="shortcut icon" href="/favicon.ico" type="images/x-icon">
+<link rel="stylesheet" href="{$maccms.path_tpl}asset/font/iconfont.css" type="text/css" />
+<link rel="stylesheet" href="{$maccms.path_tpl}asset/css/stui_default.css?v=4" type="text/css" />
+<script type="text/javascript" src="{$maccms.path_tpl}asset/js/jquery.min.js"></script>
+<script type="text/javascript" src="{$maccms.path_tpl}asset/js/stui_default.js "></script>
+<script type="text/javascript" src="{$maccms.path_tpl}asset/js/jquery.cookie.min.js "></script>
+<script type="text/javascript" src="{$maccms.path_tpl}asset/js/jquery.lazyload.min.js "></script>
+<script type="text/javascript" src="{$maccms.path_tpl}asset/js/home.js"></script>
+<script>var maccms = {"path": "__ROOT__", "path_tpl": "{$maccms['path_tpl']}", "mid": "{$maccms['mid']}", "aid": "{$maccms['aid']}", "url": "{$maccms['site_url']}", "wapurl": "{$maccms['site_wapurl']}", "mob_status": "{$maccms['mob_status']}"};</script>
+{$maccms.site_tj|html_entity_decode}
+
+
+<style>
+    .txtguanggao {
+        width: 100%;
+        overflow: hidden;
+        display: block;
+        box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .05);
+    }
+
+    .txtguanggao a {
+        width: 9.8%;
+        float: left;
+        border-radius: 3px;
+        line-height: 30px;
+        height: 30px;
+        text-align: center;
+        font-size: 16px;
+        color: #000;
+        display: inline-block;
+        background-color: #fdf751;
+        margin: 1px;
+        transition-duration: .3s;
+    }
+
+    .txtguanggao a:hover {
+        background: #ff0000;
+        color: #FFF
+    }
+
+    @media screen and (max-width: 1000px) {
+        .txtguanggao a {
+            width: 24.4%;
+            float: left;
+            border-radius: 3px;
+            line-height: 30px;
+            height: 30px;
+            text-align: center;
+            font-size: 13px;
+            color: #000;
+            display: inline-block;
+            background-color: #fdf751;
+            margin: 1px;
+            transition-duration: .3s;
+        }
+    }
+</style>
+
+
+<style>
+    .grid-container {
+        display: grid;
+        grid-template-columns: auto auto auto auto auto auto auto auto;
+        padding: 2px;
+    }
+
+    .grid-item { 
+        background: linear-gradient(145deg, #2c2c2c, #1a1a1a);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        padding: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        text-align: center;
+        margin: 2px;
+        border-radius: 15px;
+        letter-spacing: 1px;
+    }
+     .grid-item:hover {
+            background: linear-gradient(145deg, #3a3a3a, #282828);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+            transform: translateY(-2px);
+    }
+        
+    .grid-item:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .grid-item a {
+        text-decoration: none;
+        font-weight: bold;
+        color: #FFF;
+    }
+
+    @media only screen and (max-width: 1400px) {
+        .grid-item {
+            font-size: 16px;
+        }
+
+        .grid-container {
+            grid-template-columns: auto auto auto auto auto auto;
+        }
+
+    }
+
+
+    @media only screen and (max-width: 500px) {
+        .grid-item {
+            font-size: 14px;
+        }
+
+        .grid-container {
+            grid-template-columns: auto auto auto auto;
+        }
+
+    }
+</style>
+<style>
+    .grid-container2 {
+        width: 100%;
+        display: grid;
+        /* 【核心修改】自動適應欄位：每個按鈕最少 100px，剩餘空間均分 */
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 8px; /* 取代 margin，使用 gap 來控制網格間距 */
+        padding: 5px;
+        box-sizing: border-box;
+    }
+
+    .grid-item2 {
+        background: linear-gradient(145deg, #2c2c2c, #1a1a1a);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        font-size: 14px;
+        cursor: pointer;
+        text-align: center;
+        border-radius: 8px; /* 稍微調小圓角看起來更精緻 */
+        letter-spacing: 1px;
+        transition: transform 0.2s, box-shadow 0.2s; /* 加入漸變動畫更滑順 */
+    }
+
+    .grid-item2:hover {
+        background: linear-gradient(145deg, #3a3a3a, #282828);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+        transform: translateY(-2px);
+    }
+        
+    .grid-item2:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .grid-item2 a {
+        text-decoration: none;
+        color: #fff;
+        font-weight: bold;
+        display: block; /* 改用 block 確保點擊範圍填滿 */
+        width: 100%;
+        height: 100%;
+        padding: 8px 5px; /* 增加上下 padding，讓手機版更好點擊 */
+        box-sizing: border-box;
+        
+        /* 防止文字過長把版面撐破 */
+        white-space: nowrap; 
+        overflow: hidden;
+        text-overflow: ellipsis; 
+    }
+
+    /* 手機版只需微調字體與最小寬度 */
+    @media only screen and (max-width: 500px) {
+        .grid-item2 {
+            font-size: 13px;
+        }
+        .grid-container2 {
+            /* 手機版螢幕較小，將按鈕最小寬度降到 80px，約可顯示 4 欄 */
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 6px;
+        }
+    }
+</style>
+
+<link rel="stylesheet" href="/static/css/custom_ads_blocks.css?v=" type="text/css">
+<style>
+    :root {
+        --wn-block-container-width: 1280px;
+        --wn-banner-container-max-width: 100%;
+
+        --wn-block-title-color: white;
+        --wn-block-title-text-align: left;
+        --wn-block-app-margin: 30px auto 10px auto;
+        --wn-block-link-item-padding: 4px;
+        --wn-block-app-text-color:white;
+
+    }
+
+    .wn_block_title {
+        padding: 0 5px;
+    }
+</style>
+
+<style>
+    @media (min-width: 1280px) {
+       .stui-header__menu a {
+            display: block;
+            text-decoration: none;
+            color: #3289f2 !important; 
+            font-size: 26px;
+           font-weight: 900;
+            /* 适当调整字号 */
+            padding: 8px 5px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+      
+    }
+    @media (max-width: 768px) {
+        .stui-header__menu {
+            display: flex;
+            flex-wrap: wrap;
+            /* 允许换行 */
+            gap: 10px;
+            justify-content: flex-start; 
+            /* 让四个菜单均分整行 */
+            list-style: none;
+            padding: 0;
+            margin: 10px auto;
+            max-width: 100%;
+        }
+
+        .stui-header__menu li { 
+            text-align: center; 
+            margin:8px 0;
+            white-space: nowrap; 
+        }
+
+        .stui-header__menu a {
+            display: block;
+            text-decoration: none;
+            color: #3289f2 !important; 
+            /* 只在手机端强制白色 */
+            font-size: 16px;
+            /* 适当调整字号 */
+            padding: 0px 16px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .stui-header__menu li.active a {
+            background: #ff6600;
+            /* 高亮当前选中 */
+            color: #fff;
+        }
+    }
+</style>
+
+<style>
+    .pic-text-top{
+        position: absolute;
+        top: 1px;
+        padding: 1px 5px;
+        font-size: 12px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -o-text-overflow: ellipsis;
+        white-space: nowrap;
+        color: #FFFFFF;
+        right: 1px;
+        background: #0000006e;
+        border-radius: 3px;
+    }
+    
+    @media (max-width: 1024px) {
+        .stui-screen .item ul {
+            white-space: wrap;
+        }
+        
+        .stui-screen .item ul li a {
+            padding-left: 0;
+            margin-right: 5px;
+        }
+    }
+</style>
+
+
+<!-- custom css -->
+<style>
+    body:after{ 
+        background: -webkit-linear-gradient(top, #000000, #727070);
+    }
+</style>
