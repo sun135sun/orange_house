@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # 舊站冒煙測試：檢查主要網址的狀態碼與關鍵內容。只發 GET，不會改到資料庫。
-# 用法：deploy/smoke.sh [base_url]   預設 http://localhost:8081
+# 用法：deploy/smoke.sh [base_url]   預設 http://localhost:8082
 set -u
-B="${1:-http://localhost:8081}"
+B="${1:-http://localhost:8082}"
 fail=0
 
 check() { # check <url> <status> [必須出現的字串]

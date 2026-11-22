@@ -27,7 +27,7 @@ fi
 # ===============================================
 
 #配置根域名
-dname=ggmimicc
+dname=orangeh
 
 echo $dname
 

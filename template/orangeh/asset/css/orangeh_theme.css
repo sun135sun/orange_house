@@ -1,0 +1,191 @@
+@charset "utf-8";
+/*
+ * 橙色小屋 主題：橘 + 黑，部分線條用白色，圓角、字體加粗
+ * 放在 public/include.html 最後載入，蓋過 stui_default.css 和 include.html 裡的 <style>
+ * 要還原舊風格：把 include.html 最後一行 orangeh_theme.css 拿掉即可
+ */
+:root{
+    --oh-orange: #f07a22;        /* 主色（logo 的橘） */
+    --oh-orange-deep: #d9621e;   /* 深橘（logo 的 H） */
+    --oh-orange-light: #ffa64d;  /* 淺橘（hover / 文字強調） */
+    --oh-black: #000;
+    --oh-panel: #121212;         /* 區塊底色 */
+    --oh-panel-2: #1a1a1a;       /* 區塊 hover / 次要底色 */
+    --oh-line: rgba(255,255,255,.16);   /* 白色細線 */
+    --oh-line-strong: rgba(255,255,255,.55);
+    --oh-text: #f2f2f2;
+    --oh-text-muted: #a8a8a8;
+    --oh-radius: 12px;
+    --oh-radius-sm: 8px;
+    --oh-font: "Arial Rounded MT Bold", "Yuanti SC", "圆体-简", "Yuanti TC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", "Noto Sans CJK SC", "WenQuanYi Micro Hei", sans-serif;
+
+    /* 友情連結區塊（custom_ads_blocks.css 的變數） */
+    --wn-block-link-text-color: #fff;
+    --wn-block-link-text-color-dark: #fff;
+    --wn-block-link-item-background-color: var(--oh-panel);
+    --wn-block-link-item-background-color-dark: var(--oh-panel);
+    --wn-block-link-item-background-color-light: var(--oh-panel);
+    --wn-block-link-item-background-hover-color: var(--oh-orange-deep);
+    --wn-block-link-item-background-hover-color-dark: var(--oh-orange-deep);
+    --wn-block-link-item-background-hover-color-light: var(--oh-orange-deep);
+}
+
+/* ---------- 全站 ---------- */
+body{ font-family: var(--oh-font); font-weight: 500; color: var(--oh-text); letter-spacing: .3px;}
+body:after,
+body::after{ background: radial-gradient(ellipse at 50% -15%, rgba(240,122,34,.45), rgba(0,0,0,0) 50%), #000 !important; background-color: #000 !important;}
+h1,h2,h3,h4,h5,h6{ font-weight: 700;}
+a:focus,a:hover,a:active{ color: var(--oh-orange-light);}
+::-webkit-scrollbar{ background-color: #0d0d0d;}
+::-webkit-scrollbar-thumb{ background-color: var(--oh-orange-deep); border-radius: 6px;}
+::selection{ background: var(--oh-orange); color: #fff;}
+
+/* ---------- header ---------- */
+.stui-header{ padding-bottom: 14px; border-bottom: 2px solid var(--oh-orange); box-shadow: 0 1px 0 rgba(255,255,255,.25);}
+.stui-header__menu li a,
+.stui-header__menu a{ color: var(--oh-orange) !important; font-weight: 700;}
+.stui-header__menu li a:hover,
+.stui-header__menu li.active a{ color: #fff !important;}
+.stui-header__menu li.active a:before{ background-color: #fff;}
+.stui_header__user > li > a,
+.stui_header__user > li > span{ color: #ddd;}
+.stui_header__user > li > a:hover{ color: var(--oh-orange-light);}
+@media (max-width: 768px){
+    .stui-header__menu a{ border: 1px solid var(--oh-line); border-radius: 999px !important;}
+    .stui-header__menu li.active a{ background: var(--oh-orange) !important; border-color: var(--oh-orange); color: #fff !important;}
+}
+
+/* 下拉（搜尋 / 分類 / 歷史） */
+.dropdown{ background-color: var(--oh-panel); border: 1px solid var(--oh-line); border-radius: var(--oh-radius); box-shadow: 0 8px 24px rgba(0,0,0,.6);}
+.dropdown:after{ background-color: var(--oh-panel); border-top: 1px solid var(--oh-line); border-right: 1px solid var(--oh-line);}
+.dropdown a, .dropdown h5{ color: var(--oh-text);}
+.dropdown.search .item .form-control{ background-color: #000; color: #fff; border: 1px solid var(--oh-line); border-radius: 999px;}
+.dropdown.search li, .dropdown.history li a{ border-top-color: var(--oh-line);}
+.dropdown.type li a{ background-color: var(--oh-panel-2); border-radius: 999px;}
+.dropdown.search li a:hover, .dropdown.history li a:hover{ color: var(--oh-orange-light);}
+.dropdown.type li a:hover, .dropdown.type li.active a{ background-color: var(--oh-orange); color: #fff;}
+
+/* ---------- 篩選列 ---------- */
+.stui-screen .head{ background-color: var(--oh-panel); border: 1px solid var(--oh-line); border-radius: var(--oh-radius) var(--oh-radius) 0 0;}
+.stui-screen .item{ background-color: var(--oh-panel); border: 1px solid var(--oh-line); border-top: 0; border-radius: 0 0 var(--oh-radius) var(--oh-radius);}
+.stui-screen .item ul{ border-top-color: var(--oh-line);}
+.stui-screen .head .text, .stui-screen .head .all, .stui-screen .head a,
+.stui-screen .item ul li a, .stui-screen .item ul li span{ color: var(--oh-text-muted);}
+.stui-screen .item ul li.active a, .stui-screen .item ul li a:hover{ color: var(--oh-orange-light);}
+
+/* ---------- 區塊標題（友情链接 / 推荐 / 今日…）：橘色字 + 白色底線 ---------- */
+.wn_block_title,
+.stui-vodlist__head h3, .stui-vodlist__head h3 a{ color: var(--oh-orange) !important; font-weight: 700;}
+/* 「推荐」（header.html 的 h3.title）和「今日」等頁面標題（各頁 .stui-pannel__bd > h2，原本行內寫死白色） */
+h3.title, h3.title .iconfont,
+.stui-pannel__bd > h2{ color: var(--oh-orange) !important; font-weight: 700 !important;}
+.stui-pannel__bd > h2{ padding-left: 12px !important; border-left: 4px solid var(--oh-orange); line-height: 1.2;}
+.wn_block_link .wn_block_title{ padding: 0 0 8px 12px !important; margin-bottom: 12px; border-left: 4px solid var(--oh-orange); border-bottom: 1px solid var(--oh-line); line-height: 1.2;}
+
+/* ---------- 友情連結：橘色實心按鈕，可容納 10 個字 ----------
+ * 原本是 flex + 固定 8 欄（手機 4 欄），字多就被切掉；改成 grid，欄寬至少 10 個字寬
+ * 桌機一行顯示 10 個字；手機固定 3 欄，超過約 7 個字自動換成兩行
+ */
+.wn_block_link .wn_block_link_wrapper{ display: grid !important; grid-template-columns: repeat(auto-fill, minmax(calc(10em + 24px), 1fr)); gap: 10px; font-size: 15px;}
+.wn_block_link .wn_block_link_item{ width: auto !important; margin: 0 !important; padding: 8px 12px !important; box-sizing: border-box !important; font-size: 15px !important; line-height: 1.3; border-radius: 10px !important; background: linear-gradient(135deg, var(--oh-orange-light), var(--oh-orange-deep)) !important; box-shadow: 0 2px 10px rgba(240,122,34,.25); transition: transform .15s, box-shadow .15s;}
+.wn_block_link .wn_block_link_item_name{ background: transparent !important; color: #fff !important; font-size: inherit !important; font-weight: 700; padding: 0 !important; white-space: nowrap;}
+.wn_block_link .wn_block_link_item:hover{ background: #fff !important; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(240,122,34,.4);}
+.wn_block_link .wn_block_link_item:hover .wn_block_link_item_name{ color: var(--oh-orange-deep) !important;}
+@media (max-width: 767px){
+    .wn_block_link .wn_block_link_wrapper{ grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px;}
+    .wn_block_link .wn_block_link_item{ padding: 6px 4px !important; font-size: 12px !important; min-height: 32px;}
+    .wn_block_link .wn_block_link_item_name{ white-space: normal; word-break: break-all; letter-spacing: 0;}
+}
+
+/* ---------- 推薦標籤：黑底橘框 ---------- */
+.grid-item, .grid-item2{ background: #000 !important; border: 1px solid rgba(240,122,34,.7); border-radius: 999px !important; box-shadow: none !important;}
+.grid-item:hover, .grid-item2:hover{ background: var(--oh-orange) !important; border-color: var(--oh-orange); box-shadow: 0 4px 14px rgba(240,122,34,.35) !important;}
+.grid-item a, .grid-item2 a{ color: #fff; font-weight: 700;}
+.txtguanggao a{ background-color: var(--oh-orange) !important; color: #fff !important; border-radius: 999px !important; font-weight: 700;}
+.txtguanggao a:hover{ background: #fff !important; color: var(--oh-orange-deep) !important;}
+
+/* ---------- 影片列表 ---------- */
+.stui-vodlist__head h3{ padding-left: 12px; border-left: 4px solid var(--oh-orange); line-height: 1.2;}
+.stui-vodlist__thumb{ border-radius: var(--oh-radius) var(--oh-radius) 0 0; overflow: hidden;}
+.stui-vodlist__detail{ background-color: var(--oh-panel); border: 1px solid var(--oh-line); border-top: 0; border-bottom: 3px solid var(--oh-orange); border-radius: 0 0 var(--oh-radius) var(--oh-radius);}
+.stui-vodlist__detail .title a{ color: #fff; font-weight: 600;}
+.pic-text-top{ background: var(--oh-orange) !important; color: #fff !important; font-weight: 700;}
+.stui-vodlist__detail .title a:hover{ color: var(--oh-orange-light);}
+.stui-vodlist__detail .text{ color: var(--oh-text-muted);}
+.stui-vodlist__detail.index .title .iconfont{ color: var(--oh-orange);}
+.stui-vodlist li:hover .stui-vodlist__detail{ border-color: var(--oh-orange);}
+.pic-tag{ background: linear-gradient(135deg, var(--oh-orange-light), var(--oh-orange-deep)); border-radius: 0 0 0 var(--oh-radius-sm); font-weight: 700;}
+.pic-text-top{ border-radius: 999px; padding: 1px 8px;}
+
+/* ---------- 詳情 ---------- */
+.stui-content__detail{ background-color: var(--oh-panel); border: 1px solid var(--oh-line); border-radius: var(--oh-radius);}
+.stui-content__detail .title{ color: #fff; font-weight: 700;}
+.stui-content__side{ background-color: var(--oh-panel-2); border-radius: var(--oh-radius);}
+.stui-content__thumb .pic img{ border-radius: var(--oh-radius);}
+.stui-content__detail .play-btn a{ background-color: var(--oh-orange); color: #fff; border-radius: 999px; font-weight: 700;}
+.stui-content__detail .play-btn a:hover{ background-color: #fff; color: var(--oh-orange-deep);}
+
+/* ---------- 播放頁 ---------- */
+.stui-player__video{ border-radius: var(--oh-radius); overflow: hidden;}
+.stui-player__side{ background-color: var(--oh-panel) !important; border: 1px solid var(--oh-line); border-radius: var(--oh-radius);}
+.stui-player__side .tab{ border-bottom-color: var(--oh-line);}
+.stui-player__side .tab li a, .stui-player__side .item .head h3{ color: var(--oh-text-muted);}
+.stui-player__side .tab li.active a{ color: var(--oh-orange-light);}
+.stui-player__side .tab li.active a:before{ background-color: var(--oh-orange);}
+.stui-player__side .item .tab-top{ background-color: var(--oh-panel); border: 1px solid var(--oh-line); border-radius: var(--oh-radius-sm);}
+.stui-player__side .item .tab-top:after{ background-color: var(--oh-panel);}
+.stui-player__side .item .tab-top li{ border-bottom-color: var(--oh-line);}
+.stui-player__side .item .tab-top li a{ color: var(--oh-text);}
+.stui-player__detail{ background-color: var(--oh-panel); border: 1px solid var(--oh-line); border-radius: var(--oh-radius);}
+.stui-player__detail .title{ color: #fff; font-weight: 700;}
+.stui-player__detail .data{ color: var(--oh-text-muted);}
+.stui-player__detail .more a{ background-color: #000; border: 1px solid var(--oh-line); border-radius: 999px; color: #ddd;}
+.stui-player__detail .more a:hover{ border-color: var(--oh-orange); color: var(--oh-orange-light);}
+@media (max-width: 767px){
+    .stui-player__detail .more{ background-color: var(--oh-panel-2); border-radius: var(--oh-radius) var(--oh-radius) 0 0;}
+}
+
+/* 選集 */
+.stui-play__list li a{ background-color: #000; border: 1px solid var(--oh-line); border-radius: 999px; color: #ddd;}
+.stui-play__list li a:hover{ border-color: var(--oh-orange); color: var(--oh-orange-light);}
+.stui-play__list li.active a{ background-color: var(--oh-orange); border-color: var(--oh-orange); color: #fff;}
+
+/* ---------- 分頁 ---------- */
+.stui-page__item li a{ background-color: var(--oh-panel); border: 1px solid var(--oh-line); border-radius: 999px; color: #ccc;}
+.stui-page__item li a:hover{ border-color: var(--oh-orange); color: var(--oh-orange-light);}
+.stui-page__item li.active a, .stui-page__item li.active span{ background-color: var(--oh-orange); border-color: var(--oh-orange); color: #fff;}
+.stui-page__all a .iconfont{ color: var(--oh-line-strong);}
+.stui-page__all a:hover .iconfont{ color: var(--oh-orange);}
+.stui-page__item input, .stui-page__item .form-control{ background-color: #000; color: #fff; border: 1px solid var(--oh-line); border-radius: 999px;}
+
+/* ---------- 公告 / 其他 ---------- */
+.gonggao{ background-color: transparent;}
+.gonggao1{ background: var(--oh-panel); border: 1px solid var(--oh-line); border-left: 4px solid var(--oh-orange); border-radius: var(--oh-radius-sm); color: var(--oh-orange-light);}
+.linkli{ border-color: var(--oh-line); border-radius: 999px;}
+.friend-link a{ color: #fff;}
+.friend-link a:hover{ color: var(--oh-orange-light);}
+.fuzhi{ background: var(--oh-orange); border-radius: 999px; font-weight: 700;}
+.fuzhi:hover{ background: #fff; color: var(--oh-orange-deep);}
+.stui-gbook-form .form-control{ background-color: #000; color: #fff; border-color: var(--oh-line); border-radius: var(--oh-radius-sm);}
+.stui-gbook-form li .submit{ background-color: var(--oh-orange); color: #fff; border-radius: 999px;}
+.stui-gbook__item{ border-top-color: var(--oh-line);}
+.stui-gbook__item .cont, .stui-gbook__item .cont:before{ background-color: var(--oh-panel); border-color: var(--oh-panel);}
+
+/* 返回頂部（footer.html 的 #backToTop，原本藍色；它的 <style> 在主題之後載入，所以要 !important） */
+#backToTop{ background: linear-gradient(135deg, var(--oh-orange-light), var(--oh-orange-deep)) !important; color: #fff !important; border: 2px solid rgba(255,255,255,.85) !important; font-weight: 700; font-size: 22px !important; box-shadow: 0 4px 14px rgba(240,122,34,.45) !important;}
+#backToTop:hover{ background: #fff !important; color: var(--oh-orange-deep) !important; border-color: var(--oh-orange) !important; box-shadow: 0 6px 18px rgba(240,122,34,.55) !important;}
+
+/* 熱門頁「载入更多影片」（hot/index.html，原本紅色） */
+.load-more-btn{ background: linear-gradient(135deg, var(--oh-orange-light), var(--oh-orange-deep)) !important; border-radius: 999px !important; box-shadow: 0 4px 14px rgba(240,122,34,.35);}
+.load-more-btn:hover{ background: #fff !important; color: var(--oh-orange-deep) !important;}
+
+/* 分頁的「跳转」輸入框和按鈕（paging.html，行內樣式） */
+#jump_page{ background: #000 !important; color: #fff !important; border: 1px solid var(--oh-line) !important; border-radius: 999px 0 0 999px;}
+#jump_page:focus{ border-color: var(--oh-orange) !important;}
+#jump_page + .page_link{ background: var(--oh-orange) !important; border-radius: 0 999px 999px 0; font-weight: 700;}
+#jump_page + .page_link:hover{ background: #fff !important; color: var(--oh-orange-deep) !important;}
+
+/* footer 白色分隔線 */
+.stui-foot{ border-top: 1px solid var(--oh-line); padding-top: 20px;}
+.stui-foot, .stui-foot p, .stui-foot .text-muted{ color: var(--oh-text-muted);}
+.stui-foot a{ color: var(--oh-orange-light);}

@@ -37,18 +37,18 @@ docker compose logs -f mysql      # 看匯入進度
 docker compose exec redis redis-cli dbsize
 
 # 5. 跳轉池 API
-curl http://localhost:8081/api.php/link/fetch
+curl http://localhost:8082/api.php/link/fetch
 ```
 
 瀏覽器檢查：
 
 | 網址 | 預期 |
 |---|---|
-| http://localhost:8081/papapa/ | 首頁，有影片列表 |
-| http://localhost:8081/vodtype/200/ | 分類頁，翻頁正常 |
+| http://localhost:8082/papapa/ | 首頁，有影片列表 |
+| http://localhost:8082/vodtype/200/ | 分類頁，翻頁正常 |
 | 點任一部影片 | 詳情頁 → 播放頁，播放器能播 |
 | 搜尋 `SSIS` | 有結果 |
-| http://localhost:8081/hwyayl.php | 後台登入頁（帳密和正式站相同） |
+| http://localhost:8082/hwyayl.php | 後台登入頁（帳密和正式站相同） |
 
 ## 常用指令
 

@@ -30,15 +30,15 @@
 
             </ul>
             <div class="stui-header__logo">
-                <a class="logo" href="https://papapa.ggmimicc.top/papapa/" style="background-image:url('{:mac_url_img($maccms.site_logo)}')"></a>
+                <a class="logo" href="https://papapa.orangeh.top/papapa/" style="background-image:url('{:mac_url_img($maccms.site_logo)}')"></a>
             </div>
             <ul class="stui-header__menu">
-                <!--<li><a href="https://papapa.ggmimicc.top/papapa/">首页</a></li>-->
+                <!--<li><a href="https://papapa.orangeh.top/papapa/">首页</a></li>-->
                 <li><a href="{:mac_url('hot/index')}">热门</a></li>
                 <li><a href="{:mac_url('topic/index')}">最新</a></li>
-                {maccms:type num="5" ids="200,300,400" by="sort" order="asc"}
+             <!--   {maccms:type num="5" ids="200,300,400" by="sort" order="asc"}
                 <li><a href="{:mac_url_type($vo)}">{:unicode_encode($vo.type_name)}</a></li>
-                {/maccms:type}
+                {/maccms:type}-->
                 
             </ul>
         </div>
@@ -137,7 +137,7 @@
     <!--热搜开始-->
     <h3 class="title">
         <i class="iconfont icon-favorites"> 推荐</i>
-        <!--<a class="pull-right"><span style="font-size: 14px">永久网址：<span style="color: #FF9900">https://cc.ggmimicc.cc/ccc</span></span> </a>-->
+        <!--<a class="pull-right"><span style="font-size: 14px">永久网址：<span style="color: #FF9900">https://cc.orangeh.cc/ccc</span></span> </a>-->
     </h3>
     <div class="grid-container2">
         {maccms:foreach name=":explode(',',$maccms.search_hot)"}

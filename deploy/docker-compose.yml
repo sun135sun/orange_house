@@ -1,6 +1,6 @@
 # 舊站（orangeh）本機測試環境：web (PHP 7.4 + Apache) + MySQL 5.7 + Redis
 # 用法（在 orangeh/deploy 目錄）：docker compose up -d --build
-# 網址 http://localhost:8081 ，MySQL localhost:3308；和 code/server_app（8080 / 3307）可以同時跑
+# 網址 http://localhost:8082 ，MySQL localhost:3308；和 code/server_app（8080 / 3307）可以同時跑
 # 所有設定都寫在這個檔裡，不需要 .env
 name: orangeh
 
@@ -25,9 +25,9 @@ services:
       PHP_APP_DEBUG: "false"
       # 後台 hwyayl.php 與 /api.php/link/fetch、reset 額外允許的 IP
       # 從本機瀏覽器連進來時，容器看到的來源 IP 是下面 networks 的 gateway
-      PHP_ADMIN_ALLOWED_IPS: 172.30.81.1
+      PHP_ADMIN_ALLOWED_IPS: 172.30.82.1
     ports:
-      - "8081:80"
+      - "8082:80"
     depends_on:
       mysql:
         condition: service_healthy
@@ -82,8 +82,8 @@ networks:
     # 固定網段，PHP_ADMIN_ALLOWED_IPS 才能事先填好閘道 IP
     ipam:
       config:
-        - subnet: 172.30.81.0/24
-          gateway: 172.30.81.1
+        - subnet: 172.30.82.0/24
+          gateway: 172.30.82.1
 
 volumes:
   mysql_data:
