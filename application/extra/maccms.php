@@ -20,7 +20,7 @@ return array (
     'site_name' => '橙色小屋',
     'site_url' => 'https://ccc.orangeh.cc/ccc/',
     'site_wapurl' => 'https://ccc.orangeh.cc/ccc/',
-    'site_keywords' => '橙色小屋,官方网站,Papapa,pa,草阿粿,爆料网,抖音,手机游戏,手游,线上看,啪啪啪',
+    'site_keywords' => '橙色小屋,官方网站,ohohoh,pa,草阿粿,爆料网,抖音,手机游戏,手游,线上看,啪啪啪',
     'site_description' => '手机AV|麻豆|免费|成人|免费|高清日本AV|在线看免费观，无需下载，每日更新',
     'site_icp' => 'https://k1.jcghlvvv.cc/cghl/',
     'site_qq' => 'https://k2.jcghlvvv.cc/cghl/',
@@ -495,7 +495,7 @@ https://18oasj2.c7ykf7m1.sbs/rtt/yo1--vap.html|1',
     'role_id' => '0',
     'website_id' => '0',
     'route' => 'oaoaoa => map/index
-    papapa => map/index
+    ohohoh => map/index
 rss/index   => rss/index
 rss/baidu => rss/baidu
 rss/google => rss/google

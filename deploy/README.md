@@ -44,7 +44,7 @@ curl http://localhost:8082/api.php/link/fetch
 
 | 網址 | 預期 |
 |---|---|
-| http://localhost:8082/papapa/ | 首頁，有影片列表 |
+| http://localhost:8082/ohohoh/ | 首頁，有影片列表 |
 | http://localhost:8082/vodtype/200/ | 分類頁，翻頁正常 |
 | 點任一部影片 | 詳情頁 → 播放頁，播放器能播 |
 | 搜尋 `SSIS` | 有結果 |

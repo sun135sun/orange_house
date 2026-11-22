@@ -6,52 +6,68 @@
     
     <title> 橙色小屋｜官方网站｜爆料网｜抖音</title>
     <meta name="description" content="橙色小屋｜官方网站｜爆料网｜抖音 最用心的手机游戏发行平台，用心打造每一款手游！线上看，高速播放不延迟，超过十万部影片，每日更新">
-    <meta name="keywords" content="橙色小屋,官方网站,Papapa,pa,爆料网,抖音,手机游戏,手游,影片分享,线上看,高速播放不延迟,超过十万部影片,每日更新">
+    <meta name="keywords" content="橙色小屋,官方网站,ohohoh,pa,爆料网,抖音,手机游戏,手游,影片分享,线上看,高速播放不延迟,超过十万部影片,每日更新">
     <meta name="Robots" content="All"/>
     <link rel="icon" href="/favicon.ico?v=20261122" type="image/x-icon">
     <style>
+        /* 假搜尋頁：X（x.com）風格的黑白配色 */
+        :root {
+            --x-bg: #000;
+            --x-text: #e7e9ea;
+            --x-muted: #71767b;
+            --x-line: #2f3336;
+            --x-panel: #16181c;
+            --x-input: #202327;
+            --x-blue: #1d9bf0;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
         }
-        
+
         body {
-            background-color: #fff;
-            color: #333;
+            background-color: var(--x-bg);
+            color: var(--x-text);
             line-height: 1.5;
         }
-        
+
         .container {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
-        
+
         /* 顶部导航栏 */
         .header {
             display: flex;
             justify-content: flex-end;
-            padding: 20px 30px;
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--x-line);
         }
-        
+
         .nav-links {
             display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
             align-items: center;
+            gap: 4px 20px;
         }
-        
+
         .nav-links a {
-            font-size: 13px;
-            color: #333;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--x-muted);
             text-decoration: none;
-            margin-left: 20px;
         }
-        
+
         .nav-links a:hover {
-            color: #3388ff;
+            color: var(--x-text);
+            text-decoration: underline;
         }
-        
+
         /* 主要内容区域 */
         .main-content {
             display: flex;
@@ -59,108 +75,148 @@
             align-items: center;
             justify-content: center;
             flex-grow: 1;
-            padding-top: 80px;
+            padding: 60px 16px 0;
         }
-        
+
         .logo {
-            margin-bottom: 30px;
+            margin-bottom: 32px;
         }
-        
+
         .logo-text {
             font-size: 60px;
-            font-weight: bold;
-            color: #3388ff;
-            letter-spacing: -2px;
+            font-weight: 800;
+            color: var(--x-text);
+            letter-spacing: -1.5px;
+            text-align: center;
         }
-        
+
         .search-box {
             width: 650px;
+            max-width: 100%;
             margin-bottom: 30px;
         }
-        
+
         .search-form {
             display: flex;
-            border: 2px solid #3388ff;
-            border-radius: 10px;
-            overflow: hidden;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 4px 4px 8px;
+            background-color: var(--x-input);
+            border: 1px solid transparent;
+            border-radius: 9999px;
         }
-        
+
+        .search-form:focus-within {
+            background-color: var(--x-bg);
+            border-color: var(--x-blue);
+        }
+
         .search-input {
             flex-grow: 1;
-            padding: 12px 16px;
+            min-width: 0;
+            padding: 10px 12px;
             border: none;
             outline: none;
+            background: transparent;
+            color: var(--x-text);
             font-size: 16px;
         }
-        
+
+        .search-input::placeholder {
+            color: var(--x-muted);
+        }
+
         .search-btn {
-            background-color: #3388ff;
-            color: white;
+            flex-shrink: 0;
+            background-color: var(--x-text);
+            color: #0f1419;
             border: none;
-            padding: 0 25px;
+            border-radius: 9999px;
+            padding: 10px 24px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 15px;
+            font-weight: 700;
         }
-        
+
         .search-btn:hover {
-            background-color: #2a7ae9;
+            background-color: #d7dbdc;
         }
-        
+
         .shortcuts {
             display: flex;
+            flex-wrap: wrap;
             justify-content: center;
-            gap: 30px;
+            gap: 24px;
             margin-top: 20px;
         }
-        
+
         .shortcut-item {
             display: flex;
             flex-direction: column;
             align-items: center;
             text-decoration: none;
-            color: #666;
+            color: var(--x-muted);
             font-size: 13px;
         }
-        
+
         .shortcut-icon {
-            width: 40px;
-            height: 40px;
-            background-color: #f5f5f5;
+            width: 48px;
+            height: 48px;
+            background-color: var(--x-panel);
+            border: 1px solid var(--x-line);
             border-radius: 50%;
+            color: var(--x-text);
+            font-weight: 700;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 8px;
+            transition: background-color .2s;
         }
-        
+
         .shortcut-item:hover {
-            color: #3388ff;
+            color: var(--x-text);
         }
-        
+
+        .shortcut-item:hover .shortcut-icon {
+            background-color: #1d1f23;
+        }
+
         /* 底部区域 */
         .footer {
             text-align: center;
-            padding: 20px;
-            font-size: 12px;
-            color: #999;
+            padding: 20px 16px;
+            font-size: 13px;
+            color: var(--x-muted);
+            border-top: 1px solid var(--x-line);
         }
-        
+
         .footer-links {
             margin-bottom: 10px;
         }
-        
+
         .footer-links a {
-            color: #666;
+            color: var(--x-muted);
             text-decoration: none;
             margin: 0 10px;
         }
-        
+
         .footer-links a:hover {
-            color: #3388ff;
+            color: var(--x-text);
+            text-decoration: underline;
         }
-        
+
         .copyright {
             margin-top: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .header { padding: 12px 16px; }
+            .nav-links { gap: 4px 14px; }
+            .nav-links a { font-size: 13px; }
+            .main-content { padding-top: 40px; }
+            .logo-text { font-size: 44px; }
+            .search-btn { padding: 10px 18px; }
         }
     </style>
 
@@ -221,7 +277,7 @@
         <!-- 主要内容区域 -->
         <main class="main-content">
             <div class="logo">
-                <div class="logo-text">零度搜索</div>
+                <div class="logo-text">橙色搜索</div>
             </div>
             
             <div class="search-box">

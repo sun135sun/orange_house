@@ -61,8 +61,8 @@
 <main>
     <h1>:(</h1>
     <p>嗨，朋友！看上去你输入的地址不存在哦~</p>
-    <p>你可以去浏览我的 <a href="/papapa/">首页</a> ~</p>
-    <a class="btn" href="/papapa/">返回首页</a>
+    <p>你可以去浏览我的 <a href="/ohohoh/">首页</a> ~</p>
+    <a class="btn" href="/ohohoh/">返回首页</a>
 </main>
 
 
@@ -78,7 +78,7 @@
   t--;
   time.innerHTML = t;
   if(t <= 0) {
-   location.href = "/papapa/";
+   location.href = "/ohohoh/";
    clearInterval(inter);
   }
  }

@@ -19,16 +19,16 @@ check() { # check <url> <status> [必須出現的字串]
 }
 
 # 從首頁取一部影片 id
-vid=$(curl -s "$B/papapa/" | grep -o '/voddetail/[0-9]*' | head -1 | grep -o '[0-9]*')
+vid=$(curl -s "$B/ohohoh/" | grep -o '/voddetail/[0-9]*' | head -1 | grep -o '[0-9]*')
 if [ -z "$vid" ]; then
-  echo "FAIL /papapa/ 取不到影片 id（資料庫連不上？用 docker compose logs web 看錯誤）"
+  echo "FAIL /ohohoh/ 取不到影片 id（資料庫連不上？用 docker compose logs web 看錯誤）"
   exit 1
 fi
 echo "     影片 id = $vid"
 
 # 前台
 check /                                   200
-check /papapa/                            200 '/voddetail/'
+check /ohohoh/                            200 '/voddetail/'
 check /oaoaoa                             200 '/voddetail/'
 check /hot/                               200
 check /devdev/                            200

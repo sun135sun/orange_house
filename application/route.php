@@ -48,7 +48,7 @@ return array (
     array (
     ),
   ),
-   'papapa' => 
+   'ohohoh' => 
   array (
     0 => 'map/index',
     1 => 

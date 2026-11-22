@@ -1,7 +1,7 @@
 <div class="stui-pannel__bd">
     <!-- 分类列表 -->
       <!--<a href="javascript:void(0)" onclick="openUrl('video_type','{:mac_url_type($vo2)}')" title="{:unicode_encode($vo2.type_name)}">>-->
-    {maccms:type ids="parent" flag="vod" order="asc" by="sort" id="vo" key="key2"}
+   <!-- {maccms:type ids="parent" flag="vod" order="asc" by="sort" id="vo" key="key2"}
     <div class="stui-vodlist__head">
         <a class="pull-right" href="{:mac_url_type($vo)}">更多 <i class="iconfont icon-more"></i></a>
         <h3>
@@ -11,6 +11,7 @@
                 </i> {:unicode_encode($vo.type_name)}
             </a>
         </h3>
+        
         <div class="grid-container2">
             {maccms:type parent="'. $vo['type_id'] .'" flag="vod" order="asc" by="sort" id="vo2" key="key2"}
             <div class="grid-item" style="background: #;"> 
@@ -21,7 +22,7 @@
         </div>
         
     </div>
-    {/maccms:type}
+    {/maccms:type}-->
  
     <!-- end 分类列表 -->
 </div>
